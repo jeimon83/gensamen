@@ -15,7 +15,7 @@ class User < ApplicationRecord
   ROLES = ['admin','supervisor','operador','supervisor_clinica','operador_clinica'].freeze
 
   ROLES.each do |role|
-    scope role, where(role: role)
+    scope role, -> { where(role: role) }
     define_method :"#{role}?" do
       send(:role) == role
     end

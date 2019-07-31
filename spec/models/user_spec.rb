@@ -22,5 +22,4 @@ RSpec.describe User, type: :model do
   it "is invalid without an email"
   it "is invalid without a firstname"
   it "is invalid without a lastname"
-  it "returns a contact's full name as a string"
 end
