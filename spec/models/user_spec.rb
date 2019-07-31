@@ -14,22 +14,13 @@
 #  clinic_id       :bigint
 #
 
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+require 'rails_helper'
 
-one:
-  first_name: MyString
-  last_name: MyString
-  email: MyString
-  phone: MyString
-  role: MyString
-  clinic: MyString
-  password_digest: MyString
-
-two:
-  first_name: MyString
-  last_name: MyString
-  email: MyString
-  phone: MyString
-  role: MyString
-  clinic: MyString
-  password_digest: MyString
+RSpec.describe User, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
+  it "has a valid factory"
+  it "is invalid without an email"
+  it "is invalid without a firstname"
+  it "is invalid without a lastname"
+  it "returns a contact's full name as a string"
+end

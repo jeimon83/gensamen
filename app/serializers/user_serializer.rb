@@ -11,8 +11,9 @@
 #  password_digest :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  clinic_id       :bigint
 #
 
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :email, :role, :first_name, :last_name, :full_name, :phone
+  attributes :id, :email, :role, :first_name, :last_name, :full_name, :phone, :clinic_id
 end

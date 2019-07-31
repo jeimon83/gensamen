@@ -11,6 +11,6 @@ Rails.application.routes.draw do
     resources :users, only: [:index]
   end
 
-  #root to: 'application#service'
+  root to: 'application#service'
 
 end
