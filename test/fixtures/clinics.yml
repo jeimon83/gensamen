@@ -6,8 +6,8 @@
 #  name           :string
 #  cuit           :string
 #  habilitation   :string
-#  beds_voluntary :string
-#  beds_judicial  :string
+#  beds_voluntary :integer
+#  beds_judicial  :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #

@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 2019_07_31_193004) do
     t.string "name"
     t.string "cuit"
     t.string "habilitation"
-    t.string "beds_voluntary"
-    t.string "beds_judicial"
+    t.integer "beds_voluntary"
+    t.integer "beds_judicial"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

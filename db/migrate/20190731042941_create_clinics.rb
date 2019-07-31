@@ -4,8 +4,8 @@ class CreateClinics < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :cuit
       t.string :habilitation
-      t.string :beds_voluntary
-      t.string :beds_judicial
+      t.integer :beds_voluntary
+      t.integer :beds_judicial
 
       t.timestamps
     end
