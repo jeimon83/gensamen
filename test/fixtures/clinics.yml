@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: clinics
+#
+#  id             :bigint           not null, primary key
+#  name           :string
+#  cuit           :string
+#  habilitation   :string
+#  number_of_beds :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  cuit: MyString
+  habilitation: MyString
+  number_of_beds: MyString
+
+two:
+  name: MyString
+  cuit: MyString
+  habilitation: MyString
+  number_of_beds: MyString
