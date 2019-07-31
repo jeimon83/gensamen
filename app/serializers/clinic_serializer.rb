@@ -6,11 +6,12 @@
 #  name           :string
 #  cuit           :string
 #  habilitation   :string
-#  number_of_beds :string
+#  beds_voluntary :string
+#  beds_judicial  :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
 
 class ClinicSerializer < ActiveModel::Serializer
-  attributes :id, :name, :cuit, :habilitation, :number_of_beds
+  attributes :id, :name, :cuit, :habilitation, :beds_voluntary, :beds_judicial
 end

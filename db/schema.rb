@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_31_043316) do
+ActiveRecord::Schema.define(version: 2019_07_31_193004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,8 @@ ActiveRecord::Schema.define(version: 2019_07_31_043316) do
     t.string "name"
     t.string "cuit"
     t.string "habilitation"
-    t.string "number_of_beds"
+    t.string "beds_voluntary"
+    t.string "beds_judicial"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
