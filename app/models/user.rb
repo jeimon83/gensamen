@@ -12,21 +12,10 @@ class User < ApplicationRecord
     [first_name, last_name].join(' ')
   end
 
-  ROLES = [
-    'admin',
-    'supervisor',
-    'operador',
-    'supervisor_clinica',
-    'operador_clinica'
-  ].freeze
-
-  scope :admins, -> { where(role: 'admin') }
-  scope :supervisors, -> { where(role: 'supervisor') }
-  scope :operators, -> { where(role: 'operador') }
-  scope :clinic_supervisors, -> { where(role: 'supervisor_clinica') }
-  scope :clinic_operators, -> { where(role: 'operador_clinica') }
+  ROLES = ['admin','supervisor','operador','supervisor_clinica','operador_clinica'].freeze
 
   ROLES.each do |role|
+    scope role, where(role: role)
     define_method :"#{role}?" do
       send(:role) == role
     end
