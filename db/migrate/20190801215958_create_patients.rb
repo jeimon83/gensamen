@@ -8,8 +8,10 @@ class CreatePatients < ActiveRecord::Migration[6.0]
       t.string :gender
       t.date :birth_date
       t.string :address
-      t.references :city, null: false, foreign_key: true
-      t.string :phone
+      t.string :department
+      t.string :state
+      t.string :city
+      t.string :postal_code
 
       t.timestamps
     end
