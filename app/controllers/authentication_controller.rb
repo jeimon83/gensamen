@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Authentication Controller
 class AuthenticationController < ApplicationController
   skip_before_action :authenticate_request, only: [:authenticate]
   before_action :get_subdomain
@@ -13,11 +16,5 @@ class AuthenticationController < ApplicationController
     else
       render json: command.errors, status: :unauthorized
     end
-  end
-
-  private
-
-  def get_subdomain
-    @subdomain ||= request.subdomains.first
   end
 end
