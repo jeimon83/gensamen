@@ -25,9 +25,7 @@ class AuthenticateUser
   attr_accessor :password
 
   def user
-    user = User.find_by_email(email)
-    #user = User.where("email = :email", { email: email }).take
-
+    user = User.find_by(email: email)
     if user && user.authenticate(password)
       @current_user = user
       return user
