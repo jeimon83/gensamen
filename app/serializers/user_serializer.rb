@@ -16,4 +16,6 @@
 
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :email, :role, :first_name, :last_name, :full_name, :phone, :clinic_id
+
+  belongs_to :clinic, optional: true
 end

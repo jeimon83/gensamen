@@ -14,6 +14,8 @@
 #  updated_at      :datetime         not null
 #
 
-class Contact < ApplicationRecord
+class ContactSerializer < ActiveModel::Serializer
+  attributes :id, :lastname, :firstname, :document_type, :document_number, :relationship, :phone, :patient_id
+
   belongs_to :patient
 end

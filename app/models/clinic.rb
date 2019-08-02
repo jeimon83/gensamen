@@ -16,15 +16,16 @@
 
 # Clinic Model
 class Clinic < ApplicationRecord
-  validates :name, :cuit, :habilitation, presence: true
+  validates :name, :habilitation, presence: true
+  validate :valid
 
-  def valid?
+  def valid
     @message = 'El CUIT no puede ser nulo' unless cuit.present?
-    @message = 'El CUIT no es valido' unless valid_cuit?
-    @message.blank?
+    @message = 'El CUIT no es valido' unless valid_cuit
+    self.errors.add(:cuit, @message) unless @message.blank?
   end
 
-  def valid_cuit?
+  def valid_cuit
     return false unless cuit.present?
 
     raw_cuit = cuit.remove('-')

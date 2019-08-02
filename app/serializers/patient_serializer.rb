@@ -18,6 +18,7 @@
 #  updated_at      :datetime         not null
 #
 
-class Patient < ApplicationRecord
-
+class PatientSerializer < ActiveModel::Serializer
+  attributes :id, :lastname, :firstname, :document_type, :document_number, :gender, :birth_date,
+             :address, :department, :state, :city, :postal_code
 end

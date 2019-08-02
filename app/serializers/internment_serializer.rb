@@ -11,10 +11,8 @@
 #  updated_at :datetime         not null
 #
 
-require 'test_helper'
+class InternmentSerializer < ActiveModel::Serializer
+  attributes :id, :begin_date, :type, :end_date, :patient_id
 
-class InternmentTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  belongs_to :patient
 end

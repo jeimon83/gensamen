@@ -16,15 +16,13 @@
 #  clinic_id       :bigint
 #
 
-
 # User Model
 class User < ApplicationRecord
-  belongs_to :clinic, optional: true
   validates :first_name, :last_name, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :password, length: { minimum: 8 }
   has_secure_password
-
+  belongs_to :clinic, optional: true
+  
   def full_name
     [first_name, last_name].join(' ')
   end
