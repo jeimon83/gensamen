@@ -1,25 +1,28 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id              :bigint           not null, primary key
-#  email           :string
-#  first_name      :string
-#  last_name       :string
-#  phone           :string
-#  role            :string
-#  password_digest :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  clinic_id       :bigint
-#
+# frozen_string_literal: true
 
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
-  it "has a valid factory"
-  it "is invalid without an email"
-  it "is invalid without a firstname"
-  it "is invalid without a lastname"
+  context 'Do validation tests' do
+    let(:user) { build(:user) }
+    it 'Ensures first name presence' do
+      user.first_name = nil
+      expect(user.save).to eq(false)
+    end
+    it 'Ensures last name presence' do
+      user.last_name = nil
+      expect(user.save).to eq(false)
+    end
+    it 'Ensures email presence' do
+      user.email = nil
+      expect(user.save).to eq(false)
+    end
+    it 'Ensures password presence' do
+      user.password = nil
+      expect(user.save).to eq(false)
+    end
+    it 'Should save successfully' do
+      expect(user.save).to eq(true)
+    end
+  end
 end

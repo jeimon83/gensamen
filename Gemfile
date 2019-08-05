@@ -37,6 +37,10 @@ group :development, :test do
   gem 'pry'
   gem 'pry-byebug'
   gem 'annotate'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'factory_bot'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -47,12 +51,9 @@ group :development do
 end
 
 group :test do
-  gem 'factory_bot'
-  gem 'factory_bot_rails'
-  gem 'rspec'
   gem 'ffaker'
-  gem 'rspec-rails'
   gem 'rails-controller-testing'
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
