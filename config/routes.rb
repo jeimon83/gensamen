@@ -11,10 +11,6 @@ Rails.application.routes.draw do
   resources :contacts,    only: [:index]
   resources :internments, only: [:index]
 
-  namespace :admin do
-    resources :users, only: [:index]
-  end
-
   root to: 'application#service'
 
 end
