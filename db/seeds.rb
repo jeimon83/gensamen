@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Dir[File.join(Rails.root, 'db', 'seed_data', '*.rb')].sort.each do |seed|
+  puts "###### procesando #{seed}"
+  load seed
+end
+
+puts "########## acomodando secuencias de tablas"
+ActiveRecord::Base.connection.tables.each do |t|
+  ActiveRecord::Base.connection.reset_pk_sequence!(t)
+end
+
+puts "########## Fin."
