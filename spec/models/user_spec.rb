@@ -2,6 +2,14 @@
 
 require 'rails_helper'
 
+class FullName
+  def full_name
+    first_name = "Jaime"
+    last_name = "GM"
+    [first_name, last_name].join(' ')
+  end
+end
+
 RSpec.describe User, type: :model do
   context 'Do validation tests' do
     let(:user) { build(:user) }
@@ -21,6 +29,11 @@ RSpec.describe User, type: :model do
       user.password = nil
       expect(user.save).to eq(false)
     end
+     it "should say 'Jaime GM' when we call the full_name method" do 
+         fn = FullName.new 
+         message = fn.full_name 
+         expect(message).to eq "Jaime GM"
+      end
     it 'Should save successfully' do
       expect(user.save).to eq(true)
     end
