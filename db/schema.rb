@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_19_142213) do
+ActiveRecord::Schema.define(version: 2019_08_20_171211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,9 @@ ActiveRecord::Schema.define(version: 2019_08_19_142213) do
     t.string "postal_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "clinic_id"
+    t.text "medical_record"
+    t.index ["clinic_id"], name: "index_patients_on_clinic_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -79,5 +82,6 @@ ActiveRecord::Schema.define(version: 2019_08_19_142213) do
 
   add_foreign_key "contacts", "patients"
   add_foreign_key "internments", "patients"
+  add_foreign_key "patients", "clinics"
   add_foreign_key "users", "clinics"
 end

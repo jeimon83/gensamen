@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post '/login', to: 'authentication#authenticate'
   
   resources :users,       only: [:index]
-  resources :patients,    only: [:index]
+  resources :patients
   resources :clinics,     only: [:index, :show]
   resources :contacts,    only: [:index]
   resources :internments, only: [:index]
