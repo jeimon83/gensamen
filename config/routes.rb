@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   
   resources :users,       only: [:index]
   resources :patients,    only: [:index]
-  resources :clinics,     only: [:index, :show]
+  resources :clinics
   resources :contacts,    only: [:index]
   resources :internments, only: [:index]
 
