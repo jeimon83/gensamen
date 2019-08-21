@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: contacts
@@ -13,7 +15,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
-
+# Contact Serializer
 class ContactSerializer < ActiveModel::Serializer
   attributes :id, :lastname, :firstname, :document_type, :document_number, :relationship, :phone, :patient_id
 
