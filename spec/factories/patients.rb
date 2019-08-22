@@ -5,6 +5,7 @@ FactoryBot.define do
     firstname { FFaker::Name.first_name }
     lastname { FFaker::Name.last_name }
     document_number { FFaker::Identification.ssn }
-    clinic_id { FFaker::Identification.ssn }
+    association :clinic, strategy: :build
+    clinic_id {clinic.id}
   end
 end

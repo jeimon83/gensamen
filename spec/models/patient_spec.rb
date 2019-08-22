@@ -17,9 +17,17 @@ RSpec.describe Patient, type: :model do
       patient.document_number = nil
       expect(patient.save).to eq(false)
     end
-    it 'Ensures that belongs to Clinic' do
-      patient.clinic_id = nil
-      expect(patient.save).to eq(false)
+    it 'Should save successfully' do
+      expect(patient.save).to eq(true)
+    end
+  end
+  context "Testing Clinic relation" do
+    it "Belongs to a Clinic" do
+      expect { FactoryBot.build(:patient).clinic }.to_not raise_error
+    end
+    it "Belongs to Clinic Test Nº2" do
+      assc = Patient.reflect_on_association(:clinic)
+      expect(assc.macro).to eq :belongs_to
     end
   end
 end

@@ -25,6 +25,5 @@
 class PatientSerializer < ActiveModel::Serializer
   attributes :id, :lastname, :firstname, :document_type, :document_number, :gender, :birth_date,
              :address, :department, :state, :city, :postal_code, :medical_record
-
   belongs_to :clinic
 end
