@@ -18,7 +18,7 @@
 
 # User Model
 class User < ApplicationRecord
-  validates :first_name, :last_name, presence: true
+  validates_presence_of :first_name, :last_name
   validates :email, presence: true, uniqueness: true
   has_secure_password
   belongs_to :clinic, optional: true

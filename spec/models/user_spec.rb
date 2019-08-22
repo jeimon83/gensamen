@@ -38,4 +38,13 @@ RSpec.describe User, type: :model do
       expect(user.save).to eq(true)
     end
   end
+  context "Testing Clinic relation" do
+    it "Belongs to a Clinic" do
+      expect { FactoryBot.build(:user).clinic }.to_not raise_error
+    end
+    it "Belongs to Clinic Test Nº2" do
+      assc = User.reflect_on_association(:clinic)
+      expect(assc.macro).to eq :belongs_to
+    end
+  end
 end
