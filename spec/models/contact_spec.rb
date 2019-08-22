@@ -4,25 +4,31 @@ require 'rails_helper'
 
 RSpec.describe Contact, type: :model do
   context 'Do validation tests' do
+    let(:contact) { build(:contact) }
     it 'Ensures name presence' do
-      contact = Contact.new(lastname: "GM", document_number: "22", phone: "3333", patient_id: 1)
+      contact.firstname = nil
       expect(contact.save).to eq(false)
     end
     it 'Ensures lastname presence' do
-      contact = Contact.new(firstname: "Jaime", document_number: "22", phone: "3333", patient_id: 1)
+      contact.lastname = nil
       expect(contact.save).to eq(false)
     end
     it 'Ensures phone presence' do
-      contact = Contact.new(firstname: "Jaime", lastname: "GM", document_number: "22", patient_id: 1)
+      contact.phone = nil
       expect(contact.save).to eq(false)
     end
     it 'Ensures document number presence' do
-      contact = Contact.new(firstname: "Jaime", lastname: "GM", phone: "3333", patient_id: 1)
+      contact.document_number = nil
       expect(contact.save).to eq(false)
     end
-    it 'Ensures that belongs to Patient' do
-      contact = Contact.new(firstname: "Jaime", lastname: "GM", document_number: "22", phone: "3333")
-      expect(contact.save).to eq(false)
+  end
+  context "Testing Patient relation" do
+    it "Belongs to a Patient" do
+      expect { FactoryBot.build(:contact).patient }.to_not raise_error
+    end
+    it "Belongs to Patient Test Nº2" do
+      assc = Contact.reflect_on_association(:patient)
+      expect(assc.macro).to eq :belongs_to
     end
   end
 end
