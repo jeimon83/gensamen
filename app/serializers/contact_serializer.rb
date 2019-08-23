@@ -17,7 +17,6 @@
 #
 # Contact Serializer
 class ContactSerializer < ActiveModel::Serializer
-  attributes :id, :lastname, :firstname, :document_type, :document_number, :relationship, :phone, :patient_id
-
+  attributes :id, :lastname, :firstname, :document_type, :document_number, :relationship, :phone
   belongs_to :patient
 end
