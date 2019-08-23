@@ -16,9 +16,14 @@
 #  postal_code     :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  clinic_id       :bigint
+#  medical_record  :text
 #
 
 class Patient < ApplicationRecord
+  validates :firstname, :lastname, presence: true
+  validates :document_number, presence: true, uniqueness: true
   belongs_to :clinic
+  has_many :contacts, dependent: :destroy
   has_many :internments
 end

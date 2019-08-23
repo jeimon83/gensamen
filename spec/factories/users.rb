@@ -6,5 +6,7 @@ FactoryBot.define do
     last_name { FFaker::Name.last_name }
     email { FFaker::Internet.email }
     password { FFaker::Internet.password }
+    association :clinic, strategy: :build
+    clinic_id { clinic.id }
   end
 end

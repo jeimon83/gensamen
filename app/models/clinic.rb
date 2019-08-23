@@ -19,6 +19,7 @@ class Clinic < ApplicationRecord
   validates :name, :habilitation, presence: true
   validate :valid
   has_many :patients
+  has_many :users
 
   def valid
     @message = 'El CUIT no puede ser nulo' unless cuit.present?
