@@ -7,6 +7,6 @@ FactoryBot.define do
     email { FFaker::Internet.email }
     password { FFaker::Internet.password }
     association :clinic, strategy: :build
-    clinic_id {clinic.id}
+    clinic_id { clinic.id }
   end
 end
