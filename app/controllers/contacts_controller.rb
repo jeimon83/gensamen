@@ -2,16 +2,16 @@
 
 # Contacts Controller
 class ContactsController < ApplicationController
-  before_action :set_patient, only: [:index, :show]
+  before_action :set_patient
   before_action :set_contact, only: [:show, :update, :destroy]
 
   def index
-    @contacts = Contact.where('patient_id = ?', params[:patient_id])
+    @contacts = @patient.contacts
     render json: @contacts, status: :ok
   end
 
   def create
-    @contact = Contact.new(contact_params)
+    @contact = @patient.contacts.new
     if @contact.save
       render json: @contact, serializer: ContactSerializer
     else

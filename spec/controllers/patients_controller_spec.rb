@@ -13,4 +13,12 @@ RSpec.describe PatientsController, type: :controller do
       expect(response.content_type).to eq 'application/json; charset=utf-8'
     end
   end
+  context 'GET patients#show' do
+    let!(:patient) { create :patient }
+    it 'Render JSON' do
+      get :show, params: { id: patient.id }
+      expect(response).to have_http_status(200)
+      expect(response.content_type).to eq 'application/json; charset=utf-8'
+    end
+  end
 end
