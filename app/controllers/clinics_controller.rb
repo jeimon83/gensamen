@@ -9,7 +9,7 @@ class ClinicsController < ApplicationController
   def create
     @clinic = Clinic.new(clinic_params)
     if @clinic.save
-      render json: @clinic, serializer: ClinicSerializer, root: :clinic
+      render json: @clinic, serializer: ClinicSerializer
     else
       render json: @clinic.errors.full_messages, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class ClinicsController < ApplicationController
 
   def update
     if @clinic.update(clinic_params)
-      render json: @clinic, serializer: clinicSerializer, root: :clinic
+      render json: @clinic, serializer: clinicSerializer
     else
       render json: @clinic.errors.full_messages, status: :unprocessable_entity
     end
