@@ -19,7 +19,7 @@ RSpec.describe Contact, type: :model do
     end
     it 'Ensures document number presence' do
       contact.document_number = nil
-      expect(contact.svalid?.to eq(false)
+      expect(contact.valid?).to eq(false)
     end
   end
   context 'Testing Patient relation' do
