@@ -15,5 +15,7 @@
 #
 
 class Contact < ApplicationRecord
+  validates_presence_of :firstname, :lastname, :phone
+  validates :document_number, presence: true, uniqueness: true
   belongs_to :patient
 end

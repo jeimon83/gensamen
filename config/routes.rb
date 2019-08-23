@@ -9,8 +9,13 @@ Rails.application.routes.draw do
   resources :patients do
      resources :contacts
   end
+<<<<<<< HEAD
   resources :clinics
   resources :internments
+=======
+  resources :clinics,     only: [:index, :show]
+  resources :internments, only: [:index]
+>>>>>>> contacts
 
   root to: 'application#service'
 

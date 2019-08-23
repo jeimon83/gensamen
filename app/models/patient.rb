@@ -24,5 +24,5 @@ class Patient < ApplicationRecord
   validates :firstname, :lastname, presence: true
   validates :document_number, presence: true, uniqueness: true
   belongs_to :clinic
-  has_many :contacts
+  has_many :contacts, dependent: :destroy
 end
