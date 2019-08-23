@@ -6,6 +6,6 @@ FactoryBot.define do
     type = "Voluntaria"
     end_date = "14/09/2019"
     association :patient, strategy: :build
-    patient_id {patient.id}
+    patient_id { patient.id }
   end
 end

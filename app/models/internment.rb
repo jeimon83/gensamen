@@ -13,6 +13,6 @@
 
 class Internment < ApplicationRecord
   self.inheritance_column = :_type_disabled
-  validates_presence_of :begin_date, :type
+  validates :begin_date, :type, presence: true
   belongs_to :patient
 end
