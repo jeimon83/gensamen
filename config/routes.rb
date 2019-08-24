@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
   resources :clinics
   resources :internments
+  resources :configs
 
   root to: 'application#service'
 
