@@ -7,6 +7,6 @@ FactoryBot.define do
     document_number = "31060702"
     phone = "44444"
     association :patient, strategy: :build
-    patient_id {patient.id}
+    patient_id { patient.id }
   end
 end

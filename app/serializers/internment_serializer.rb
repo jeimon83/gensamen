@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: internments
@@ -10,9 +12,8 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
+# Internment Serializer
 class InternmentSerializer < ActiveModel::Serializer
-  attributes :id, :begin_date, :type, :end_date, :patient_id
-
+  attributes :id, :begin_date, :type, :end_date
   belongs_to :patient
 end
