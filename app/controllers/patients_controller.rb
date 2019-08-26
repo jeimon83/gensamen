@@ -7,9 +7,9 @@ class PatientsController < ApplicationController
   def index
     service = Search::Patient.new(params)
     service.run
-    patients = service.data.map { |patient| { id: patient.id, firstname: patient.firstname, lastnama: patient.lastname, 
-        habilitacion: patient.habilitation, beds_voluntary: patient.beds_voluntary, beds_voluntary: patient.beds.beds_voluntary } }
-    render json: { clinics: clinics, meta: service.metadata }
+    patients = service.data.map { |p| { id: p.id, firstname: p.firstname, lastname: p.lastname, document_type: p.document_type, 
+                                        document_number: p.document_number, birth_date: p.birth_date, medical_record: p.medical_record } }
+    render json: { patients: patients, meta: service.metadata }
   end
 
   def create

@@ -21,7 +21,7 @@ class Search::Clinic
 
   def search
     if @criteria.present?
-      @data = @data.where('LOWER(first_name) LIKE :name OR LOWER(last_name) LIKE :name', { name: "%#{@criteria.try(:downcase)}%" })
+      @data = @data.where('LOWER(name) LIKE :name OR LOWER(cuit) LIKE :cuit', { name: "%#{@criteria.try(:downcase)}%" })
     else
       @data = @data.all
     end

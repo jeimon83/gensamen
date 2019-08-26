@@ -7,8 +7,8 @@ class ClinicsController < ApplicationController
   def index
     service = Search::Clinic.new(params)
     service.run
-    clinics = service.data.map { |clinic| { id: clinic.id, name: clinic.name, cuit: clinic.cuit, habilitacion: clinic.habilitation,
-                                            beds_voluntary: clinic.beds_voluntary, beds_voluntary: clinic.beds.beds_voluntary } }
+    clinics = service.data.map { |c| { id: c.id, name: c.name, cuit: c.cuit, habilitacion: c.habilitation,
+                                            beds_voluntary: c.beds_voluntary, beds_voluntary: c.beds_voluntary } }
     render json: { clinics: clinics, meta: service.metadata }
   end
 

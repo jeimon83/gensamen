@@ -1,16 +1,17 @@
 # frozen_string_literal: true.
 
-# Patient Search Service
-class Search::Patient
+# Contact Search Service
+class Search::Contact
   attr_reader :page, :per_page, :criteria, :data, :metadata
 
-  def initialize(options = {})
+  def initialize(patient, options = {})
     @paginate = options.fetch(:paginate, true)
     @page     = options.fetch(:page, 1).to_i
     @per_page = options.fetch(:limit, 10).to_i
     @criteria = options.fetch(:criteria, nil)
 
-    @data     = ::Patient
+    @patient  = patient
+    @data     = ::Contact
     @metadata = {}
   end
 
@@ -21,7 +22,7 @@ class Search::Patient
 
   def search
     if @criteria.present?
-      @data = @data.where('LOWER(firstname) LIKE :name OR LOWER(lastname) LIKE :name', { name: "%#{@criteria.try(:downcase)}%" })
+      @data = @data.where('LOWER(first_name) LIKE :name OR LOWER(last_name) LIKE :name', { name: "%#{@criteria.try(:downcase)}%" })
     else
       @data = @data.all
     end

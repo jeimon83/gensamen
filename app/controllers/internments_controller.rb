@@ -4,11 +4,13 @@
 class InternmentsController < ApplicationController
   before_action :set_internment, only: [:show, :update, :destroy]
 
-  def index
-    @internments = Internment.all
-    render json: @internments, status: :ok
+ def index
+    service = Search::Internment.new(params)
+    service.run
+    internments = service.data.map { |i| { id: i.id, begin_date: i.begin_date, type: i.type, end_date: i.end_date } }
+    render json: { internments: internments, meta: service.metadata }
   end
-
+ 
   def create
     @internment = Internment.new(internment_params)
     if @internment.save

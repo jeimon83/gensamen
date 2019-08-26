@@ -6,10 +6,13 @@ class ContactsController < ApplicationController
   before_action :set_contact, only: [:show, :update, :destroy]
 
   def index
-    @contacts = @patient.contacts
-    render json: @contacts, status: :ok
+    service = Search::Contact.new(params)
+    service.run
+    contacts = service.data.map { |c| { id: c.id, name: c.firstname, lastname: c.lastname, document_type: c.document_type,
+                                            document_number: c.document_number, relationship: c.relationship, phone: c.phone } }
+    render json: { contacts: contacts, meta: service.metadata }
   end
-
+   
   def create
     @contact = @patient.contacts.new
     if @contact.save
