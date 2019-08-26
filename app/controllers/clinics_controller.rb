@@ -1,9 +1,15 @@
+# frozen_string_literal: true
+
+# Clinics Controller
 class ClinicsController < ApplicationController
   before_action :set_clinic, only: [:show, :update, :destroy]
 
   def index
-    @clinics = Clinic.all
-    render json: @clinics, status: :ok
+    service = Search::Clinic.new(params)
+    service.run
+    clinics = service.data.map { |clinic| { id: clinic.id, name: clinic.name, cuit: clinic.cuit, habilitacion: clinic.habilitation,
+                                            beds_voluntary: clinic.beds_voluntary, beds_voluntary: clinic.beds.beds_voluntary } }
+    render json: { clinics: clinics, meta: service.metadata }
   end
 
   def create

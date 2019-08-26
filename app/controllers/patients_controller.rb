@@ -5,8 +5,11 @@ class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :update, :destroy]
 
   def index
-    @patients = Patient.all
-    render json: @patients, status: :ok
+    service = Search::Patient.new(params)
+    service.run
+    patients = service.data.map { |patient| { id: patient.id, firstname: patient.firstname, lastnama: patient.lastname, 
+        habilitacion: patient.habilitation, beds_voluntary: patient.beds_voluntary, beds_voluntary: patient.beds.beds_voluntary } }
+    render json: { clinics: clinics, meta: service.metadata }
   end
 
   def create
