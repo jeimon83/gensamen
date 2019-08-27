@@ -9,7 +9,8 @@ class ContactsController < ApplicationController
     service = Search::Contact.new(params)
     service.run
     contacts = service.data.map { |c| { id: c.id, name: c.firstname, lastname: c.lastname, document_type: c.document_type,
-                                            document_number: c.document_number, relationship: c.relationship, phone: c.phone } }
+                                        document_number: c.document_number, relationship: c.relationship, phone: c.phone, 
+                                        patient_id: c.patient_id } }
     render json: { contacts: contacts, meta: service.metadata }
   end
    

@@ -7,7 +7,7 @@ class InternmentsController < ApplicationController
  def index
     service = Search::Internment.new(params)
     service.run
-    internments = service.data.map { |i| { id: i.id, begin_date: i.begin_date, type: i.type, end_date: i.end_date } }
+    internments = service.data.map { |i| { id: i.id, begin_date: i.begin_date, type: i.type, end_date: i.end_date, patient_id: i.patient_id } }
     render json: { internments: internments, meta: service.metadata }
   end
  

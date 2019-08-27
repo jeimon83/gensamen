@@ -8,7 +8,7 @@ class PatientsController < ApplicationController
     service = Search::Patient.new(params)
     service.run
     patients = service.data.map { |p| { id: p.id, firstname: p.firstname, lastname: p.lastname, document_type: p.document_type, 
-                                        document_number: p.document_number, birth_date: p.birth_date, medical_record: p.medical_record } }
+                                        document_number: p.document_number, birth_date: p.birth_date, medical_record: p.medical_record, clinic_id: p.clinic_id } }
     render json: { patients: patients, meta: service.metadata }
   end
 
