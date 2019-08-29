@@ -5,7 +5,7 @@ class InternmentsController < ApplicationController
   before_action :set_internment, only: [:show, :update, :destroy]
 
  def index
-    service = Search::Internment.new(params)
+    service = Search::Internment.new(current_user, @patient, params)
     service.run
     internments = service.data.map { |i| { id: i.id, begin_date: i.begin_date, type: i.type, end_date: i.end_date, patient_id: i.patient_id } }
     render json: { internments: internments, meta: service.metadata }

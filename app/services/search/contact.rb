@@ -4,7 +4,7 @@
 class Search::Contact
   attr_reader :page, :per_page, :criteria, :data, :metadata
 
-  def initialize(options = {})
+  def initialize(current_user, patient_id, options = {})
     @paginate = options.fetch(:paginate, true)
     @page     = options.fetch(:page, 1).to_i
     @per_page = options.fetch(:limit, 10).to_i
@@ -21,7 +21,7 @@ class Search::Contact
 
   def search
     if @criteria.present?
-      @data = @data.where('LOWER(first_name) LIKE :name OR LOWER(last_name) LIKE :name', { name: "%#{@criteria.try(:downcase)}%" })
+      @data = @data.where('LOWER(firstname) LIKE :name OR LOWER(lastname) LIKE :name', { name: "%#{@criteria.try(:downcase)}%" })
     else
       @data = @data.all
     end

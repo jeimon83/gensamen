@@ -4,7 +4,7 @@
 class Search::Clinic
   attr_reader :page, :per_page, :criteria, :data, :metadata
 
-  def initialize(options = {})
+  def initialize(current_user, options = {})
     @paginate = options.fetch(:paginate, true)
     @page     = options.fetch(:page, 1).to_i
     @per_page = options.fetch(:limit, 10).to_i
@@ -12,6 +12,8 @@ class Search::Clinic
 
     @data     = ::Clinic
     @metadata = {}
+
+    @user = current_user
   end
 
   def run

@@ -5,7 +5,7 @@ class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :update, :destroy]
 
   def index
-    service = Search::Patient.new(params)
+    service = Search::Patient.new(current_user, params)
     service.run
     patients = service.data.map { |p| { id: p.id, firstname: p.firstname, lastname: p.lastname, document_type: p.document_type, 
                                         document_number: p.document_number, birth_date: p.birth_date, medical_record: p.medical_record, clinic_id: p.clinic_id } }
