@@ -6,7 +6,7 @@ class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :update, :destroy]
 
   def index
-    @patients = Patient.all
+    @patients = @clinic.patients
     render json: @patients, status: :ok
   end
 
