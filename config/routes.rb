@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   resources :clinics do
     resources :patients do
       resources :contacts
-    end
-    resources :internments
+      resources :internments
+    end    
   end
   
   resources :configs

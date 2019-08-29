@@ -2,15 +2,16 @@
 
 # Internment Controller
 class InternmentsController < ApplicationController
+  before_action :set_patient
   before_action :set_internment, only: [:show, :update, :destroy]
 
   def index
-    @internments = Internment.all
+    @internments = @patients.internments
     render json: @internments, status: :ok
   end
 
   def create
-    @internment = Internment.new(internment_params)
+    @internment = @patient.internments.new(internment_params)
     if @internment.save
       render json: @internment, serializer: InternmentSerializer
     else
@@ -40,6 +41,10 @@ class InternmentsController < ApplicationController
   end
 
   private
+
+  def set_patient
+    @patient = Patient.find(params[:patient_id])
+  end
 
   def set_internment
      @internment = Internment.find(params[:id])
