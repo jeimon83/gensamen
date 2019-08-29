@@ -1,4 +1,4 @@
-# frozen_string_literal: true.
+# frozen_string_literal: true
 
 # Clinic Search Service
 class Search::Clinic
@@ -17,16 +17,21 @@ class Search::Clinic
   end
 
   def run
+    fetch unless @user.admin? & @user.clinic_id.nil?
     search
     paginate if @paginate
   end
 
+  def fetch
+    @data = @data.find_by(id: @user.clinic_id)
+  end
+
   def search
-    if @criteria.present?
-      @data = @data.where('LOWER(name) LIKE :name OR LOWER(cuit) LIKE :cuit', { name: "%#{@criteria.try(:downcase)}%" })
-    else
+    #if @criteria.present?
+    #  @data = @data.where('LOWER(name) LIKE :name OR LOWER(cuit) LIKE :cuit', name: "%#{@criteria.try(:downcase)}%")
+    #else
       @data = @data.all
-    end
+    #end
   end
 
   def paginate
