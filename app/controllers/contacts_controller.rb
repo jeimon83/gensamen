@@ -2,7 +2,7 @@
 
 # Contacts Controller
 class ContactsController < ApplicationController
-  before_action :set_patient
+  before_action :set_patient, only: [:index, :new, :create]
   before_action :set_contact, only: [:show, :update, :destroy]
 
   def index
@@ -42,12 +42,12 @@ class ContactsController < ApplicationController
 
   private
 
-  def set_contact
-    @contact = @patient.contacts.find(params[:id])
-  end
-
   def set_patient
     @patient = Patient.find(params[:patient_id])
+  end
+
+  def set_contact
+    @contact = @patient.contacts.find(params[:id])
   end
 
   def contact_params

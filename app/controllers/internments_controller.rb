@@ -2,11 +2,11 @@
 
 # Internment Controller
 class InternmentsController < ApplicationController
-  before_action :set_patient
+  before_action :set_patient, only: [:index, :new, :create]
   before_action :set_internment, only: [:show, :update, :destroy]
 
   def index
-    @internments = @patients.internments
+    @internments = @patient.internments
     render json: @internments, status: :ok
   end
 
@@ -43,7 +43,7 @@ class InternmentsController < ApplicationController
   private
 
   def set_patient
-    @patient = Patient.find(params[:patient_id])
+     @patient = Patient.find(params[:patient_id])
   end
 
   def set_internment
