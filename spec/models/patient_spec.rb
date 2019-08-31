@@ -22,7 +22,6 @@
 #  medical_record  :text
 #
 
-
 require 'rails_helper'
 
 RSpec.describe Patient, type: :model do

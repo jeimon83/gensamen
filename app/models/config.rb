@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: configs
@@ -7,6 +9,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
+# Config Model
 class Config < ApplicationRecord
 end

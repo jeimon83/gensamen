@@ -16,7 +16,6 @@
 #  updated_at      :datetime         not null
 #
 
-
 require 'rails_helper'
 
 RSpec.describe Contact, type: :model do

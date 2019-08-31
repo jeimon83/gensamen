@@ -16,7 +16,6 @@
 #  clinic_id       :bigint
 #
 
-
 require 'rails_helper'
 
 RSpec.describe User, type: :model do

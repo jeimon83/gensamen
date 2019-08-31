@@ -16,7 +16,6 @@
 #  clinic_id       :bigint
 #
 
-
 FactoryBot.define do
   factory :user, class: User do
     first_name { FFaker::Name.first_name }

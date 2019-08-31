@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: internments
@@ -10,7 +12,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
+# Internment Model
 class Internment < ApplicationRecord
   self.inheritance_column = :_type_disabled
   validates :begin_date, :type, presence: true

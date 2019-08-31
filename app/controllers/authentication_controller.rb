@@ -2,7 +2,7 @@
 
 # Authentication Controller
 class AuthenticationController < ApplicationController
-  # skip_before_action :authenticate_request, only: [:authenticate]
+  skip_before_action :authenticate_request, only: [:authenticate]
 
   def check
     render json: { user: @current_user.to_json }, status: :ok

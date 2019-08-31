@@ -22,7 +22,6 @@
 #  medical_record  :text
 #
 
-
 FactoryBot.define do
   factory :patient, class: Patient do
     firstname { FFaker::Name.first_name }
