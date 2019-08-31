@@ -8,6 +8,8 @@ RSpec.describe PatientsController, type: :controller do
       @clinic = FactoryBot.create(:clinic)
     end
     it 'Returns a success response' do
+      user = FactoryBot.create(:user)
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
       get :index, params: { clinic_id: @clinic.id }
       expect(response).to have_http_status(:success)
     end
@@ -20,7 +22,6 @@ RSpec.describe PatientsController, type: :controller do
     let!(:patient) { create :patient }
     it 'Render JSON' do
       get :show, params: { id: patient.id }
-      expect(response).to have_http_status(200)
       expect(response.content_type).to eq 'application/json; charset=utf-8'
     end
   end
