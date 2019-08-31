@@ -2,7 +2,7 @@
 
 # Application Controller
 class ApplicationController < ActionController::API
-  #before_action :authenticate_request, except: [:service]
+  before_action :authenticate_request, except: [:service]
   attr_reader :current_user
 
   def current_user
