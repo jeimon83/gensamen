@@ -37,7 +37,7 @@ RSpec.describe Contact, type: :model do
       contact.document_number = nil
       expect(contact.valid?).to eq(false)
     end
-    it 'Should save successfully 2' do
+    it 'Should save successfully' do
       expect(contact.save).to eq(true)
     end
   end
