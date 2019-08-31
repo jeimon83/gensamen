@@ -21,7 +21,6 @@
 #  clinic_id       :bigint
 #  medical_record  :text
 #
-# Patient Serializer
 class PatientSerializer < ActiveModel::Serializer
   attributes :id, :lastname, :firstname, :document_type, :document_number, :gender, :birth_date,
              :address, :department, :state, :city, :postal_code, :medical_record

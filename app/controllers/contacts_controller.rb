@@ -47,11 +47,10 @@ class ContactsController < ApplicationController
   end
 
   def set_contact
-    @contact = @patient.contacts.find(params[:id])
+    @contact = Contact.find(params[:id])
   end
 
   def contact_params
-    params.require(:contact).permit(:patient_id, :lastname, :firstname, :document_type, :document_number,
-                                    :relationship, :phone)
+    params.require(:contact).permit(:patient_id, :lastname, :firstname, :document_type, :document_number, :relationship, :phone)
   end
 end

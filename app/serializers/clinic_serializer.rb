@@ -13,7 +13,6 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
-# Clinic Serializer
 class ClinicSerializer < ActiveModel::Serializer
   attributes :id, :name, :cuit, :habilitation, :beds_voluntary, :beds_judicial
 end

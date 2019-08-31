@@ -1,10 +1,25 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: internments
+#
+#  id         :bigint           not null, primary key
+#  begin_date :date
+#  type       :string
+#  end_date   :date
+#  patient_id :bigint           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Internment, type: :model do
   context 'Do validation tests' do
-    internment = FactoryBot.build(:internment)
+    @patient = FactoryBot.create(:patient)
+    internment = FactoryBot.create(:internment, patient: @patient)
     it 'Ensures begin date presence' do
       internment.begin_date = nil
       expect(internment.valid?).to eq(false)
@@ -13,7 +28,12 @@ RSpec.describe Internment, type: :model do
       internment.type = nil
       expect(internment.valid?).to eq(false)
     end
-    
+  end
+  context 'Should Save Successfully' do
+    internment = FactoryBot.build(:internment).patient
+    it 'Should save correctly' do
+      expect(internment.save).to eq(true)
+    end
   end
   context 'Testing Patient relation' do
     it 'Belongs to a Patient Test Nº1' do

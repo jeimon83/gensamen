@@ -1,5 +1,22 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: contacts
+#
+#  id              :bigint           not null, primary key
+#  patient_id      :bigint           not null
+#  lastname        :string
+#  firstname       :string
+#  document_type   :string
+#  document_number :string
+#  relationship    :string
+#  phone           :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Contact, type: :model do
@@ -20,6 +37,9 @@ RSpec.describe Contact, type: :model do
     it 'Ensures document number presence' do
       contact.document_number = nil
       expect(contact.valid?).to eq(false)
+    end
+    it 'Should save successfully 2' do
+      expect(contact.save).to eq(true)
     end
   end
   context 'Testing Patient relation' do

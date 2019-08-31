@@ -15,7 +15,6 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
-# Contact Serializer
 class ContactSerializer < ActiveModel::Serializer
   attributes :id, :lastname, :firstname, :document_type, :document_number, :relationship, :phone
   belongs_to :patient

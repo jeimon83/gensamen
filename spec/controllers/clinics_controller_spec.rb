@@ -13,4 +13,11 @@ RSpec.describe ClinicsController, type: :controller do
       expect(response.content_type).to eq 'application/json; charset=utf-8'
     end
   end
+  context 'Get clinics#show' do
+    let!(:clinic) { create :clinic }
+    it 'Render JSON' do
+      get :show, params: { id: clinic.id }
+      expect(response.content_type).to eq 'application/json; charset=utf-8'
+    end
+  end
 end
