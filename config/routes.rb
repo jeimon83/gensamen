@@ -7,11 +7,11 @@ Rails.application.routes.draw do
   
   resources :users,       only: [:index]
   
-  resources :clinics do
+  resources :clinics, shallow: true do
     resources :patients do
       resources :contacts
+      resources :internments
     end
-    resources :internments
   end
   
   resources :configs

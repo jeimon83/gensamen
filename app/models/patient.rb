@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: patients
@@ -19,7 +21,7 @@
 #  clinic_id       :bigint
 #  medical_record  :text
 #
-
+# Patient Model
 class Patient < ApplicationRecord
   validates :firstname, :lastname, presence: true
   validates :document_number, presence: true, uniqueness: true

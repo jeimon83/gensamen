@@ -2,7 +2,7 @@
 
 # Patients Controller
 class PatientsController < ApplicationController
-  before_action :set_clinic
+  before_action :set_clinic, only: [:index, :new, :create]
   before_action :set_patient, only: [:show, :update, :destroy]
 
   def index
@@ -47,7 +47,7 @@ class PatientsController < ApplicationController
   end
 
   def set_patient
-    @patient = @clinic.patients.find(params[:id])
+    @patient = Patient.find(params[:id])
   end
 
   def patient_params

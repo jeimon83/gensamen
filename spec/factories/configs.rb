@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: configs
@@ -10,6 +12,6 @@
 
 FactoryBot.define do
   factory :config do
-    checklist { "" }
+    checklist { '' }
   end
 end

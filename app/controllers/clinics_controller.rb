@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Clinics Controller
 class ClinicsController < ApplicationController
   before_action :set_clinic, only: [:show, :update, :destroy]
 

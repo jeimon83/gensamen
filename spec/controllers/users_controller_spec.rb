@@ -4,7 +4,9 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   context 'Get users#index' do
+    user = FactoryBot.create(:user)
     it 'Returns a success response' do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
       get :index
       expect(response).to have_http_status(:success)
     end

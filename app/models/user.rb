@@ -22,12 +22,12 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   has_secure_password
   belongs_to :clinic, optional: true
-  
+
   def full_name
     [first_name, last_name].join(' ')
   end
 
-  ROLES = ['admin','supervisor','operador','supervisor_clinica','operador_clinica'].freeze
+  ROLES = ['admin', 'supervisor', 'operador', 'supervisor_clinica', 'operador_clinica'].freeze
 
   ROLES.each do |role|
     scope role, -> { where(role: role) }
