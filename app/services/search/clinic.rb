@@ -17,9 +17,8 @@ class Search::Clinic
   end
 
   def run
-    fetch_data unless @user.admin? & @user.clinic_id.nil?
+    fetch_data unless @user.admin? && @user.clinic_id.nil?
     search
-    #paginate
   end
 
   def fetch_data
