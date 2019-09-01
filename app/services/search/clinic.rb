@@ -17,24 +17,32 @@ class Search::Clinic
   end
 
   def run
-    fetch_data unless @user.admin? && @user.clinic_id.nil?
-    search
+    fetch_data
+    filter_data
+    paginate
+    order
   end
 
   def fetch_data
-    @data = @data.find_by(id: @user.clinic_id)
+    @data = if @user.clinic_id
+      @data.where(id: @user.clinic_id)
+    elsif
+      @data.all
+    else
+      @data.none
+    end    
   end
 
-  def search
-    #if @criteria.present?
-    #  @data = @data.where('LOWER(name) LIKE :name OR LOWER(cuit) LIKE :cuit', name: "%#{@criteria.try(:downcase)}%")
-    #else
-      #@data
-    #end
+  def filter_data
+    if @criteria.present?
+      @data = @data.where('LOWER(name) LIKE :name OR LOWER(cuit) LIKE :cuit', name: "%#{@criteria.try(:downcase)}%")
+    else
+      @data = @data.all
+    end
   end
 
   def paginate
-    return unless @paginate
+    return unless @paginate 
 
     @data     = @data.paginate(page: @page, per_page: @per_page)
     @metadata = {
@@ -46,5 +54,9 @@ class Search::Clinic
       previous_page:  @data.previous_page,
       next_page:      @data.next_page
     } 
+  end
+
+  def order
+    @data.order(id: :desc)
   end
 end
