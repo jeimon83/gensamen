@@ -26,7 +26,7 @@ class Search::Clinic
   def fetch_data
     @data = if @user.clinic_id
       @data.where(id: @user.clinic_id)
-    elsif
+    elsif @user.admin?
       @data.all
     else
       @data.none
@@ -42,7 +42,7 @@ class Search::Clinic
   end
 
   def paginate
-    return unless @paginate 
+    return unless @paginate
 
     @data     = @data.paginate(page: @page, per_page: @per_page)
     @metadata = {
