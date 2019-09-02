@@ -2,9 +2,10 @@
 
 # Internment Controller
 class InternmentsController < ApplicationController
+  before_action :set_patient, only: [:index, :new, :create]
   before_action :set_internment, only: [:show, :update, :destroy]
 
- def index
+  def index
     service = Search::Internment.new(current_user, @patient, params)
     service.run
     internments = service.data.map { |i| { id: i.id, begin_date: i.begin_date, type: i.type, end_date: i.end_date, patient_id: i.patient_id } }
@@ -12,7 +13,7 @@ class InternmentsController < ApplicationController
   end
  
   def create
-    @internment = Internment.new(internment_params)
+    @internment = @patient.internments.new(internment_params)
     if @internment.save
       render json: @internment, serializer: InternmentSerializer
     else
@@ -42,6 +43,10 @@ class InternmentsController < ApplicationController
   end
 
   private
+
+  def set_patient
+     @patient = Patient.find(params[:patient_id])
+  end
 
   def set_internment
      @internment = Internment.find(params[:id])

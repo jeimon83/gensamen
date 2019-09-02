@@ -6,11 +6,14 @@ Rails.application.routes.draw do
   post '/login', to: 'authentication#authenticate'
   
   resources :users,       only: [:index]
-  resources :patients do
-     resources :contacts
+  
+  resources :clinics, shallow: true do
+    resources :patients do
+      resources :contacts
+      resources :internments
+    end
   end
-  resources :clinics
-  resources :internments
+  
   resources :configs
 
   root to: 'application#service'

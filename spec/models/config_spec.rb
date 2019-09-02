@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: configs
@@ -11,5 +13,10 @@
 require 'rails_helper'
 
 RSpec.describe Config, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'Do validation tests' do
+    let(:config) { build(:config) }
+    it 'Should save successfully' do
+      expect(config.save).to eq(true)
+    end
+  end
 end

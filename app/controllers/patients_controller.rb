@@ -2,6 +2,7 @@
 
 # Patients Controller
 class PatientsController < ApplicationController
+  before_action :set_clinic, only: [:index, :new, :create]
   before_action :set_patient, only: [:show, :update, :destroy]
 
   def index
@@ -13,7 +14,7 @@ class PatientsController < ApplicationController
   end
 
   def create
-    @patient = Patient.new(patient_params)
+    @patient = @clinic.patients.new(patient_params)
     if @patient.save
       render json: @patient, serializer: PatientSerializer
     else
@@ -43,6 +44,10 @@ class PatientsController < ApplicationController
   end
 
   private
+
+  def set_clinic
+    @clinic = Clinic.find(params[:clinic_id])
+  end
 
   def set_patient
     @patient = Patient.find(params[:id])
