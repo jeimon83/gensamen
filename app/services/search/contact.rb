@@ -14,7 +14,7 @@ module Search
 
       @data     = ::Contact
       @metadata = {}
-      
+
       @user = current_user
       @patient = patient_id
     end
@@ -57,6 +57,7 @@ module Search
         next_page: @data.next_page
       }
     end
+
   end
 end
 

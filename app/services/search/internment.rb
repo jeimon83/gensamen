@@ -57,5 +57,6 @@ module Search
         next_page: @data.next_page
       }
     end
+
   end
 end
