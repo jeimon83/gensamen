@@ -8,10 +8,7 @@ class ContactsController < ApplicationController
   def index
     service = Search::Contact.new(current_user, @patient, params)
     service.run
-    contacts = service.data.map { |c| { id: c.id, name: c.firstname, lastname: c.lastname, document_type: c.document_type,
-                                        document_number: c.document_number, relationship: c.relationship, phone: c.phone, 
-                                        patient_id: c.patient_id } }
-    render json: { contacts: contacts, meta: service.metadata }
+    render json: service.data, each_serializer: ContactSerializer, meta: service.metadata
   end
    
   def create
