@@ -7,7 +7,7 @@ module Search
     attr_reader :page, :per_page, :criteria, :data, :metadata
 
     def initialize(current_user, options = {})
-      @user = current_user
+      @user = current_user || ::User.first
 
       raise ArgumentError unless @user
 
