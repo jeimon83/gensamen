@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :internments
     end
     member do
+      get :contacts
       get :internments
     end
   end
