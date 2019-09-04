@@ -1,19 +1,22 @@
-# frozen_string_literal: true
+# frozen_string_literal: true.
 
 # Module Search
 module Search
-  # Class Base
-  class Base
+  # Class Patient
+  class Patient
     attr_reader :page, :per_page, :criteria, :data, :metadata
 
-    def initialize(current_user, options = {})
+    def initialize(current_user, clinic_id, options = {})
       @paginate = options.fetch(:paginate, true)
       @page     = options.fetch(:page, 1).to_i
       @per_page = options.fetch(:limit, 10).to_i
       @criteria = options.fetch(:criteria, nil)
+
+      @data     = ::Patient
+      @metadata = {}
       
-      @data = model_class
       @user = current_user
+      @clinic = clinic_id
     end
 
     def run
@@ -23,11 +26,21 @@ module Search
     end
 
     def fetch_data
-      raise NotImplementedError
+      @data = if @user.clinic_id == @clinic.id
+                  @data.where(clinic_id: @user.clinic_id)
+              elsif @user.admin? && @user.clinic_id.nil?
+                  @data.all
+              else
+                  @data.none
+              end
     end
 
     def filter_data
-      raise NotImplementedError
+      if @criteria.present?
+        @data = @data.where('LOWER(firstname) LIKE :firstname OR LOWER(lastname) LIKE :lastname', name: "%#{@criteria.try(:downcase)}%")
+      else
+        @data = @data.all
+      end
     end
 
     def paginate
@@ -44,11 +57,6 @@ module Search
         next_page: @data.next_page
       }
     end
-    
-    private
-
-    def model_class
-      raise NotImplementedError
-    end
   end
 end
+
