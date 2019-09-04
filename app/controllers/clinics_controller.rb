@@ -3,6 +3,7 @@
 # Clinics Controller
 class ClinicsController < ApplicationController
   before_action :set_clinic, only: [:show, :update, :destroy]
+  before_action :check_user, only: [:show, :update, :destroy]
 
   def index
     service = Search::Clinic.new(current_user, params)
@@ -43,7 +44,12 @@ class ClinicsController < ApplicationController
   private
 
   def set_clinic
-     @clinic = Clinic.find(params[:id])
+    @clinic = Clinic.find(params[:id])
+  end
+
+  def check_user
+    auth_command = AuthorizeObject.call(current_user, @clinic)
+    render json: { error: 'Not Authorized' }, status: 401 unless auth_command.success?
   end
 
   def clinic_params
