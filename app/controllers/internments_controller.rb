@@ -51,7 +51,7 @@ class InternmentsController < ApplicationController
   end
 
   def internment_params
-    params.require(:internment).permit(:begin_date, :type, :end_date, :patient) 
+    params.require(:internment).permit(:begin_date, :type, :end_date) 
   end
 
 end

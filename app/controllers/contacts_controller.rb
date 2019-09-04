@@ -51,6 +51,6 @@ class ContactsController < ApplicationController
   end
 
   def contact_params
-    params.require(:contact).permit(:patient_id, :lastname, :firstname, :document_type, :document_number, :relationship, :phone)
+    params.require(:contact).permit(:lastname, :firstname, :document_type, :document_number, :relationship, :phone)
   end
 end
