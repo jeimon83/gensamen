@@ -12,7 +12,7 @@ module Search
       @per_page = options.fetch(:limit, 10).to_i
       @criteria = options.fetch(:criteria, nil)
 
-      @data     = ::Patient
+      @data     = model_class
       @metadata = {}
       
       @user = current_user
@@ -26,21 +26,11 @@ module Search
     end
 
     def fetch_data
-      @data = if @user.clinic_id == @clinic.id
-                  @data.where(clinic_id: @user.clinic_id)
-              elsif @user.admin? && @user.clinic_id.nil?
-                  @data.all
-              else
-                  @data.none
-              end
+      
     end
 
     def filter_data
-      if @criteria.present?
-        @data = @data.where('LOWER(firstname) LIKE :firstname OR LOWER(lastname) LIKE :lastname', name: "%#{@criteria.try(:downcase)}%")
-      else
-        @data = @data.all
-      end
+      raise NotImplementedError
     end
 
     def paginate
@@ -57,6 +47,7 @@ module Search
         next_page: @data.next_page
       }
     end
+
   end
 end
 
