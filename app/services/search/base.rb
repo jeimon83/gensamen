@@ -2,11 +2,18 @@
 
 # Module Search
 module Search
-  # Class Patient
-  class Patient
+  # Class Base
+  class Base
     attr_reader :page, :per_page, :criteria, :data, :metadata
 
-    def initialize(current_user, clinic_id, options = {})
+    def initialize(current_user, options = {})
+      @user = current_user
+
+      raise ArgumentError unless @user
+
+      @clinic_id  = options[:clinic_id]
+      @patient_id = options[:patient_id]
+
       @paginate = options.fetch(:paginate, true)
       @page     = options.fetch(:page, 1).to_i
       @per_page = options.fetch(:limit, 10).to_i
@@ -14,9 +21,6 @@ module Search
 
       @data     = model_class
       @metadata = {}
-      
-      @user = current_user
-      @clinic = clinic_id
     end
 
     def run
@@ -26,7 +30,7 @@ module Search
     end
 
     def fetch_data
-      
+      raise NotImplementedError
     end
 
     def filter_data

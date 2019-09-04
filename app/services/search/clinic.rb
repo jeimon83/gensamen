@@ -7,11 +7,9 @@ module Search
     
     def fetch_data
       @data = if @user.clinic_id
-                @data.where(id: @user.clinic_id)
-              elsif @user.admin?
-                @data.all
+                  @data.where(id: @user.clinic_id)
               else
-                @data.none
+                  @data.all
               end
     end
 

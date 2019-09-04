@@ -6,7 +6,7 @@ class InternmentsController < ApplicationController
   before_action :set_internment, only: [:show, :update, :destroy]
 
   def index
-    service = Search::Internment.new(current_user, @patient, params)
+    service = Search::Internment.new(current_user, params)
     service.run
     render json: service.data, each_serializer: InternmentSerializer, meta: service.metadata
   end
@@ -45,14 +45,21 @@ class InternmentsController < ApplicationController
 
   def set_patient
      @patient = Patient.find(params[:patient_id])
+     check_user(@patient)
   end
 
   def set_internment
      @internment = Internment.find(params[:id])
+     check_user(@internment)
   end
 
   def internment_params
     params.require(:internment).permit(:begin_date, :type, :end_date) 
+  end
+
+  def check_user(object)
+    authorized = AuthorizeObject.call(current_user, object).result
+    render json: { error: 'Not Authorized' }, status: 401 unless authorized
   end
 
 end

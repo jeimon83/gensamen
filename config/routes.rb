@@ -12,6 +12,9 @@ Rails.application.routes.draw do
       resources :contacts
       resources :internments
     end
+    member do
+      get :internments
+    end
   end
   
   resources :configs

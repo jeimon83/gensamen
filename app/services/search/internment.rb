@@ -3,39 +3,21 @@
 # Module Search
 module Search
   # Class Internment
-  class Internment
-    attr_reader :page, :per_page, :criteria, :data, :metadata
-
-    def initialize(current_user, patient_id, options = {})
-      @paginate = options.fetch(:paginate, true)
-      @page     = options.fetch(:page, 1).to_i
-      @per_page = options.fetch(:limit, 10).to_i
-      @criteria = options.fetch(:criteria, nil)
-
-      @data     = ::Internment
-      @metadata = {}
-
-      @user = current_user
-      @patient = patient_id
-    end
-
-    def run
-      fetch_data
-      filter_data
-      paginate
-    end
-
+  class Internment < Base
+    
     def fetch_data
-      @data = if @user.clinic_id == @patient.clinic_id
-                  @data.where(patient_id: @patient.id)
-              elsif @user.admin? && @user.clinic_id.nil?
-                  @data.all
+      @data = if @user.clinic_id
+                  @data.by_clinic(@user.clinic_id)
               else
-                  @data.none
+                  @data.all
               end
     end
 
     def filter_data
+      @data = @data.where(patient_id: @patient_id) if @patient_id.present?
+
+      @data = @data.by_clinic(@clinic_id) if @clinic_id.present?
+
       if @criteria.present?
         @data = @data.where('LOWER(firstname) LIKE :firstname OR LOWER(lastname) LIKE :lastname', name: "%#{@criteria.try(:downcase)}%")
       else
@@ -43,19 +25,10 @@ module Search
       end
     end
 
-    def paginate
-      return unless @paginate
+    private
 
-      @data     = @data.paginate(page: @page, per_page: @per_page)
-      @metadata = {
-        current_page: @data.current_page,
-        per_page: @data.per_page,
-        offset: @data.offset,
-        total_entries: @data.total_entries,
-        total_pages: @data.total_pages,
-        previous_page: @data.previous_page,
-        next_page: @data.next_page
-      }
+    def model_class
+      ::Internment
     end
 
   end

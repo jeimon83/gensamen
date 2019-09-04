@@ -19,4 +19,8 @@ class Clinic < ApplicationRecord
   validates :name, :habilitation, :cuit, presence: true
   has_many :patients
   has_many :users
+
+  def clinic_id
+    self.id
+  end
 end

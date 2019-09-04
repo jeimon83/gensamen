@@ -3,7 +3,6 @@
 # Clinics Controller
 class ClinicsController < ApplicationController
   before_action :set_clinic, only: [:show, :update, :destroy]
-  before_action :check_user, only: [:show, :update, :destroy]
 
   def index
     service = Search::Clinic.new(current_user, params)
@@ -41,15 +40,22 @@ class ClinicsController < ApplicationController
     end
   end
 
+  def internments
+    service = Search::Internment.new(current_user, params.merge(clinic_id: params[:id]))
+    service.run
+    render json: service.data, each_serializer: InternmentSerializer, meta: service.metadata
+  end
+
   private
 
   def set_clinic
     @clinic = Clinic.find(params[:id])
+    check_user
   end
 
   def check_user
-    auth_command = AuthorizeObject.call(current_user, @clinic)
-    render json: { error: 'Not Authorized' }, status: 401 unless auth_command.success?
+    authorized = AuthorizeObject.call(current_user, @clinic).result
+    render json: { error: 'Not Authorized' }, status: 401 unless authorized
   end
 
   def clinic_params

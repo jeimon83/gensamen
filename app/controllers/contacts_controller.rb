@@ -6,7 +6,7 @@ class ContactsController < ApplicationController
   before_action :set_contact, only: [:show, :update, :destroy]
 
   def index
-    service = Search::Contact.new(current_user, @patient, params)
+    service = Search::Contact.new(current_user, params)
     service.run
     render json: service.data, each_serializer: ContactSerializer, meta: service.metadata
   end
@@ -45,13 +45,21 @@ class ContactsController < ApplicationController
 
   def set_patient
     @patient = Patient.find(params[:patient_id])
+    check_user(@patient)
   end
 
   def set_contact
     @contact = Contact.find(params[:id])
+    check_user(@contact)
   end
 
   def contact_params
     params.require(:contact).permit(:lastname, :firstname, :document_type, :document_number, :relationship, :phone)
   end
+
+  def check_user(object)
+    authorized = AuthorizeObject.call(current_user, object).result
+    render json: { error: 'Not Authorized' }, status: 401 unless authorized
+  end
+  
 end
