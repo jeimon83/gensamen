@@ -35,4 +35,14 @@ class User < ApplicationRecord
       send(:role) == role
     end
   end
+
+  def to_json
+    {
+      first_name: self.first_name,
+      last_name:  self.last_name,
+      email:      self.email,
+      clinic_id:  self.clinic_id,
+      role:       self.role
+    }
+  end
 end

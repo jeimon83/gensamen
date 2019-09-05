@@ -2,7 +2,7 @@ class AuthorizeObject
   prepend SimpleCommand
 
   def initialize(current_user, object)
-    @user = current_user || User.first
+    @user = current_user
     @object = object
   end
 
