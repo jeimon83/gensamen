@@ -26,7 +26,7 @@ class PatientsController < ApplicationController
 
   def update
     if @patient.update(patient_params)
-      render json: @patient, serializer: patientSerializer
+      render json: @patient, serializer: PatientSerializer
     else
       render json: @patient.errors.full_messages, status: :unprocessable_entity
     end
