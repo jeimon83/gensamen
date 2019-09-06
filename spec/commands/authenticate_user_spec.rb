@@ -7,10 +7,11 @@ describe AuthenticateUser do
 
   describe '.call' do
     context 'when the context is successful' do
-      let(:email) { 'admin@clinicaolivos.com.ar' }
-      let(:password) { '123qwe' }
-
+      let!(:user) { FactoryBot.create(:user) }
+      let!(:email) { 'admin@gensamen.com.ar'}
+      let!(:password) { '123qwe'}
       it 'succeeds' do
+        allow(AuthenticateUser).to receive_message_chain(:call, :result).and_return(user)
         expect(context).to be_success
       end
     end
