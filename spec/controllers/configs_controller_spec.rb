@@ -10,5 +10,10 @@ RSpec.describe ConfigsController, type: :controller do
       get :index
       expect(response).to have_http_status(:success)
     end
+    it 'Returns a failure response' do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(nil)
+      get :index
+      expect(response).to have_http_status(401)
+    end
   end
 end

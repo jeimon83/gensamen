@@ -6,10 +6,11 @@ RSpec.describe ContactsController, type: :controller do
   context 'Get contacts#index' do
     before(:each) do
       @clinic = FactoryBot.create(:clinic)
+      @clinic2 = FactoryBot.create(:clinic)
       @patient = FactoryBot.create(:patient, clinic: @clinic)
     end
     let!(:user1) { FactoryBot.create(:user, clinic_id: nil) }
-    let!(:user2) { FactoryBot.create(:user, clinic_id: @clinic.id) }
+    let!(:user2) { FactoryBot.create(:user, clinic_id: @clinic2.id) }
     it 'Returns a success response' do
       allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user1)
       get :index, params: { patient_id: @patient.id }
