@@ -7,9 +7,9 @@ describe AuthenticateUser do
 
   describe '.call' do
     context 'when the context is successful' do
-      let(:email) { 'correct_email' }
-      let(:password) { 'correct_password' }
-               
+      let(:email) { 'admin@clinicaolivos.com.ar' }
+      let(:password) { '123qwe' }
+
       it 'succeeds' do
         expect(context).to be_success
       end
