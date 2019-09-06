@@ -9,7 +9,7 @@ module Search
       @data = if @user.clinic_id
                   @data.where(clinic_id: @user.clinic_id)
               else
-                  @data.all
+                  @data.where(clinic_id: @clinic_id)
               end
     end
 

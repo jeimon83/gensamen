@@ -7,16 +7,14 @@ module Search
     
     def fetch_data
       @data = if @user.clinic_id
-                @data.by_clinic(@user.clinic_id)
+                  @data.by_clinic(@user.clinic_id)
               else
-                @data.all
+                  @data.by_clinic(@clinic_id)
               end
     end
 
     def filter_data
       @data = @data.where(patient_id: @patient_id) if @patient_id.present?
-
-      @data = @data.by_clinic(@clinic_id) if @clinic_id.present?
       
       if @criteria.present?
         @data = @data.where('LOWER(firstname) LIKE :firstname OR LOWER(lastname) LIKE :lastname', name: "%#{@criteria.try(:downcase)}%")
