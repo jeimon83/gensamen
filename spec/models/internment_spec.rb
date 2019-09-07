@@ -19,6 +19,7 @@ RSpec.describe Internment, type: :model do
   context 'Do validation tests' do
     @patient = FactoryBot.create(:patient)
     internment = FactoryBot.create(:internment, patient: @patient)
+    internment2 = FactoryBot.create(:internment, patient: @patient, end_date: nil)
     it 'Ensures begin date presence' do
       internment.begin_date = nil
       expect(internment.valid?).to eq(false)
@@ -26,6 +27,9 @@ RSpec.describe Internment, type: :model do
     it 'Ensures type of internment presence' do
       internment.type = nil
       expect(internment.valid?).to eq(false)
+    end
+    it 'Should not save if internment is open' do
+      expect(internment2.save).to eq(false)
     end
   end
   context 'Should Save Successfully' do
