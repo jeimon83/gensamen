@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 class InternmentSerializer < ActiveModel::Serializer
-  attributes :id, :formatted_begin_date, :type, :formatted_end_date
+  attributes :id, :formatted_begin_date, :type, :formatted_end_date, :clinic_id
   belongs_to :patient
 
   def formatted_begin_date
