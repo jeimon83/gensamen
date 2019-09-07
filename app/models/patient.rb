@@ -27,5 +27,5 @@ class Patient < ApplicationRecord
   validates :document_number, presence: true, uniqueness: true
   belongs_to :clinic
   has_many :contacts, dependent: :destroy
-  has_many :internments
+  has_many :internments, dependent: :destroy
 end
