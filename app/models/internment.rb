@@ -20,7 +20,6 @@ class Internment < ApplicationRecord
   validates :begin_date, :type, presence: true
   validate :internment_open
 
-
   scope :by_clinic, -> (clinic_id) {
     joins(:patient).where(patients: { clinic_id: clinic_id })
   }
@@ -33,4 +32,3 @@ class Internment < ApplicationRecord
     self.errors.add(:base, 'El paciente ya tiene una internación abierta')
   end
 end
-

@@ -29,7 +29,7 @@ class Patient < ApplicationRecord
 
   validates :firstname, :lastname, presence: true
   validates :document_number, presence: true, uniqueness: true
-  
+
   scope :by_clinic, -> (clinic_id) {
     where(clinic_id: clinic_id)
   }

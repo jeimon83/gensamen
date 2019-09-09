@@ -21,7 +21,6 @@ class Contact < ApplicationRecord
 
   validates :firstname, :lastname, :phone, presence: true
   validates :document_number, presence: true, uniqueness: true
-  
 
   scope :by_clinic, -> (clinic_id) {
     joins(:patient).where(patients: { clinic_id: clinic_id })
