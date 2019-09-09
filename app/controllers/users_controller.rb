@@ -2,7 +2,6 @@
 
 # Users Controller
 class UsersController < ApplicationController
-  before_action :set_user, only: [:update]
 
   def index
     service = Search::User.new(params)
@@ -12,20 +11,16 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
-      render json: @user, serializer: UserSerializer
+    if current_user.update(user_params)
+      render json: current_user, serializer: UserSerializer
     else
-      render json: @clinic.errors.full_messages, status: :unprocessable_entity
+      render json: current_user.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   private
 
-  def set_user
-    @user = User.find(params[:id])
-  end
-
   def user_params
-    params.require(:user).permit(:email, :first_name, :last_name, :phone, :role, :password, :clinic_id)
+    params.require(:user).permit(:first_name, :last_name, :phone, :password)
   end
 end

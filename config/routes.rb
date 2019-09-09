@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   get  '/check', to: 'application#service'
   post '/login', to: 'authentication#authenticate'
   
-  resources :users,       only: [:index]
+  resources :users, only: [:index] do
+    collection do
+      patch 'update', to: 'users#update'
+    end
+  end
   
   resources :clinics, shallow: true do
     resources :patients do
