@@ -4,21 +4,14 @@
 module Search
   # Class Patient
   class Patient < Base
-    
-    def fetch_data
-      @data = if @user.clinic_id
-                  @data.where(clinic_id: @user.clinic_id)
-              else
-                  @data.where(clinic_id: @clinic_id)
-              end
-    end
 
     def filter_data
-      if @criteria.present?
-        @data = @data.where('LOWER(firstname) LIKE :firstname OR LOWER(lastname) LIKE :lastname', name: "%#{@criteria.try(:downcase)}%")
-      else
-        @data = @data.all
-      end
+      @data = @data.by_clinic(@clinic_id) if @clinic_id.present?
+
+      return if @criteria.blank?
+
+      @data = @data.where('LOWER(patients.firstname) LIKE :criteria OR '\
+                          'LOWER(patients.lastname) LIKE :criteria', criteria: "%#{@criteria}%")
     end
 
     private

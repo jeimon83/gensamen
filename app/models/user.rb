@@ -18,10 +18,16 @@
 
 # User Model
 class User < ApplicationRecord
+  has_secure_password
+
+  belongs_to :clinic, optional: true
+
   validates :first_name, :last_name, presence: true
   validates :email, presence: true, uniqueness: true
-  has_secure_password
-  belongs_to :clinic, optional: true
+
+  scope :by_clinic, -> (clinic_id) {
+    where(clinic_id: clinic_id)
+  }
 
   def full_name
     [first_name, last_name].join(' ')

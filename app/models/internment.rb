@@ -15,9 +15,11 @@
 # Internment Model
 class Internment < ApplicationRecord
   self.inheritance_column = :_type_disabled
+  belongs_to :patient
+
   validates :begin_date, :type, presence: true
   validate :internment_open
-  belongs_to :patient
+
 
   scope :by_clinic, -> (clinic_id) {
     joins(:patient).where(patients: { clinic_id: clinic_id })
@@ -26,8 +28,9 @@ class Internment < ApplicationRecord
   delegate :clinic_id, to: :patient
 
   def internment_open
-    a = self.patient.internments.where(end_date: nil).any?
-    self.errors.add(:base, 'El paciente ya tiene una internación abierta') if a
+    return true unless self.patient.internments.where(end_date: nil).any?
+
+    self.errors.add(:base, 'El paciente ya tiene una internación abierta')
   end
 end
 
