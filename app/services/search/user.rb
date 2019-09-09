@@ -3,22 +3,16 @@
 # Module Search
 module Search
   # Class User
-  class User < Base    
-
-    def fetch_data
-      @data = if @user.clinic_id
-                  @data.where(clinic_id: @user.clinic_id)
-              else
-                  @data.all
-              end
-    end
+  class User < Base
 
     def filter_data
-      if @criteria.present?
-        @data = @data.where('LOWER(email) LIKE :email OR LOWER(lastname) LIKE :lastname', name: "%#{@criteria.try(:downcase)}%")
-      else
-        @data = @data.all
-      end
+      @data = @data.by_clinic(@clinic_id) if @clinic_id.present?
+
+      return if @criteria.blank?
+      
+      @data = @data.where('LOWER(users.email) LIKE :criteria OR '\
+                          'LOWER(users.first_name) LIKE :criteria OR '\
+                          'LOWER(users.last_name) LIKE :criteria', criteria: "%#{@criteria}%")
     end
 
     private

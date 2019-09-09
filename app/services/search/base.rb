@@ -7,7 +7,7 @@ module Search
     attr_reader :page, :per_page, :criteria, :data, :metadata
 
     def initialize(current_user, options = {})
-      @user = current_user || ::User.first
+      @user = current_user
 
       raise ArgumentError unless @user
 
@@ -17,7 +17,9 @@ module Search
       @paginate = options.fetch(:paginate, true)
       @page     = options.fetch(:page, 1).to_i
       @per_page = options.fetch(:limit, 10).to_i
+
       @criteria = options.fetch(:criteria, nil)
+      @criteria = @criteria.downcase.strip if @criteria.present?
 
       @data     = model_class
       @metadata = {}
@@ -26,18 +28,27 @@ module Search
     def run
       fetch_data
       filter_data
-      paginate
+      order_data
+      paginate_data
     end
-
+    
     def fetch_data
-      raise NotImplementedError
+      @data = if @user.clinic_id
+          @data.by_clinic(@user.clinic_id)
+        else
+          @data.all
+        end
     end
 
     def filter_data
       raise NotImplementedError
     end
 
-    def paginate
+    def order_data
+      @data = @data.order(updated_at: :desc)
+    end
+
+    def paginate_data
       return unless @paginate
 
       @data     = @data.paginate(page: @page, per_page: @per_page)
@@ -51,7 +62,6 @@ module Search
         next_page: @data.next_page
       }
     end
-
   end
 end
 

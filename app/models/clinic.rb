@@ -20,6 +20,10 @@ class Clinic < ApplicationRecord
   has_many :patients
   has_many :users
 
+  scope :by_clinic, -> (clinic_id) {
+    where(id: clinic_id)
+  }
+
   def clinic_id
     self.id
   end
