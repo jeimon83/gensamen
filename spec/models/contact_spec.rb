@@ -20,7 +20,7 @@ require 'rails_helper'
 
 RSpec.describe Contact, type: :model do
   context 'Do validation tests' do
-    let(:contact) { build(:contact) }
+    let!(:contact) { build(:contact) }
     it 'Ensures name presence' do
       contact.firstname = nil
       expect(contact.valid?).to eq(false)
@@ -37,7 +37,7 @@ RSpec.describe Contact, type: :model do
       contact.document_number = nil
       expect(contact.valid?).to eq(false)
     end
-    it 'Should save successfully' do
+    it 'Saves successfully' do
       expect(contact.save).to eq(true)
     end
   end

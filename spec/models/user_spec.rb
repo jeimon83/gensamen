@@ -20,7 +20,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   context 'Do validation tests' do
-    let(:user) { build(:user) }
+    let!(:user) { build(:user) }
     it 'Ensures first name presence' do
       user.first_name = nil
       expect(user.valid?).to eq(false)
@@ -37,7 +37,7 @@ RSpec.describe User, type: :model do
       user.password = nil
       expect(user.valid?).to eq(false)
     end
-    it 'Should save successfully' do
+    it 'Saves successfully' do
       expect(user.save).to eq(true)
     end
   end

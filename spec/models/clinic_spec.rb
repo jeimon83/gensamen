@@ -30,7 +30,7 @@ RSpec.describe Clinic, type: :model do
       clinic = Clinic.new(name: 'Clinic', habilitation: '222-XX')
       expect(clinic.valid?).to eq(false)
     end
-    it 'Should save successfully' do
+    it 'Saves successfully' do
       clinic = Clinic.new(name: 'Clinica', habilitation: '222-XX', cuit: '23-31060702-9')
       expect(clinic.save).to eq(true)
     end

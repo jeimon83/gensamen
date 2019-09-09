@@ -28,14 +28,12 @@ RSpec.describe Internment, type: :model do
       internment.type = nil
       expect(internment.valid?).to eq(false)
     end
-    it 'Should not save if internment is open' do
+    it 'Will not save if internment is open' do
       expect(internment2.save).to eq(false)
     end
-  end
-  context 'Should Save Successfully' do
-    internment = FactoryBot.build(:internment).patient
     it 'Should save correctly' do
-      expect(internment.save).to eq(true)
+      internment3 = FactoryBot.build(:internment).patient
+      expect(internment3.save).to eq(true)
     end
   end
   context 'Testing Patient relation' do

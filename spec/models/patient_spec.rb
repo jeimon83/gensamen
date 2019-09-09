@@ -26,7 +26,7 @@ require 'rails_helper'
 
 RSpec.describe Patient, type: :model do
   context 'Do validation tests' do
-    let(:patient) { build(:patient) }
+    let!(:patient) { build(:patient) }
     it 'Ensures first name presence' do
       patient.firstname = nil
       expect(patient.valid?).to eq(false)
@@ -39,7 +39,7 @@ RSpec.describe Patient, type: :model do
       patient.document_number = nil
       expect(patient.valid?).to eq(false)
     end
-    it 'Should save successfully' do
+    it 'Saves successfully' do
       expect(patient.save).to eq(true)
     end
   end

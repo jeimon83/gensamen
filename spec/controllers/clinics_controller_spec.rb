@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe ClinicsController, type: :controller do
   context 'Get clinics#index' do
-    user = FactoryBot.create(:user)
+    let!(:user) { FactoryBot.create(:user) }
     it 'Returns a success response' do
       allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
       get :index
