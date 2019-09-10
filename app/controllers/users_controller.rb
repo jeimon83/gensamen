@@ -4,10 +4,9 @@
 class UsersController < ApplicationController
 
   def index
-    service = Search::User.new(params)
+    service = Search::User.new(current_user, params)
     service.run
-    users = service.data.map { |user| { id: user.id, email: user.email, name: user.full_name } }
-    render json: { users: users, meta: service.metadata }
+    render json: service.data, each_serializer: UserSerializer, meta: service.metadata
   end
 
   def update
