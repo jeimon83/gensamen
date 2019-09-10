@@ -2,23 +2,23 @@
 
 require 'rails_helper'
 
-RSpec.describe ClinicsController, type: :controller do
-  context 'Search Tests' do
-    clinic = FactoryBot.create_list(:clinic, 3)
-    let!(:user) { FactoryBot.create(:user, clinic_id: nil) }
-    let!(:user1) { FactoryBot.create(:user, clinic_id: clinic) }
+#RSpec.describe ClinicsController, type: :controller do
+RSpec.describe Search::Clinic do
+  context 'Search' do
+    let!(:clinic) { FactoryBot.create(:clinic) }
+    let!(:user) { FactoryBot.create(:user) }
     params = {}
-
-    it 'Shows all the Clinics if User.clinic_id.nil' do
+    it 'Search all the Clinics' do
+      user.clinic_id = nil
       service = Search::Clinic.new(user,params)
-      service.run
-      service.data
-      expect(service.data).to eq(3) 
+      expect(service.fetch_data.count).to eq(Clinic.all.count)
+      expect(service.filter_data).to eq(nil)
     end
-
-    it 'Shows only one Clinic if User.clinic_id not nil' do
-      service = Search::Clinic.new(user1,params)
-      expect(service.data) == clinic
+    it 'Shows only one Clinic' do
+      user.clinic_id = clinic.id
+      service = Search::Clinic.new(user,params)
+      expect(service.fetch_data.count).to eq(1)
+      expect(service.filter_data).to eq(nil)
     end
   end
 end

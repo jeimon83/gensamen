@@ -27,14 +27,4 @@ RSpec.describe ClinicsController, type: :controller do
       expect(response.content_type).to eq 'application/json; charset=utf-8'
     end
   end
-  context 'Search Service' do
-    let!(:user) { FactoryBot.create(:user) }
-    params = {}
-    it 'Find all the clinics' do
-      service = Search::Clinic.new(user,params)
-      service.run
-      service.data
-      expect(response).to have_http_status(:success)
-    end
-  end
 end
