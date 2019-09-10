@@ -28,4 +28,5 @@ class Patient < ApplicationRecord
   belongs_to :clinic
   has_many :contacts, dependent: :destroy
   has_many :internments
+  has_many :report_requests
 end
