@@ -13,12 +13,14 @@ RSpec.describe Search::Clinic do
       service = Search::Clinic.new(user,params)
       expect(service.fetch_data.count).to eq(Clinic.all.count)
       expect(service.filter_data).to eq(nil)
+      expect(service.data).to contain_exactly(*Clinic.all)
     end
     it 'Shows only one Clinic' do
       user.clinic_id = clinic.id
       service = Search::Clinic.new(user,params)
       expect(service.fetch_data.count).to eq(1)
       expect(service.filter_data).to eq(nil)
+      expect(service.data).to contain_exactly(*Clinic.where(id: user.clinic_id))
     end
   end
 end
