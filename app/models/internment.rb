@@ -18,7 +18,7 @@ class Internment < ApplicationRecord
   belongs_to :patient
 
   validates :begin_date, :type, presence: true
-  validate :internment_open
+  validate :internment_open, on: :create
 
   scope :by_clinic, -> (clinic_id) {
     joins(:patient).where(patients: { clinic_id: clinic_id })
