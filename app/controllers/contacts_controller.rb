@@ -12,7 +12,7 @@ class ContactsController < ApplicationController
   end
    
   def create
-    @contact = @patient.contacts.new
+    @contact = @patient.contacts.new(contact_params)
     if @contact.save
       render json: @contact, serializer: ContactSerializer
     else
