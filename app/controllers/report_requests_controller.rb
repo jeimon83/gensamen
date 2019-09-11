@@ -2,15 +2,16 @@
 
 # Report Request Controller
 class ReportRequestsController < ApplicationController
+  before_action :set_clinic, only: [:index, :new, :create]
   before_action :set_report_request, only: [:show, :update, :destroy]
 
   def index
-    @report_requests = ReportRequest.all
+    @report_requests = @clinic.report_requests
     render json: @report_requests, each_serializer: ReportRequestSerializer
   end
 
   def create
-    @report_request = ReportRequest.new(report_request_params)
+    @report_request = @clinic.report_requests.new(report_request_params)
     if @report_request.save
       render json: @report_request, serializer: ReportRequestSerializer
     else
