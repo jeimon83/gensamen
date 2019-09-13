@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Search::User, type: :service do
-  context 'Service' do
+  context 'Search Service' do
     let!(:clinic) { FactoryBot.create(:clinic) }
     let!(:user) { FactoryBot.create(:user, clinic_id: clinic.id) }
     params = {}
@@ -14,7 +14,7 @@ RSpec.describe Search::User, type: :service do
       expect(service.fetch_data).not_to be_empty
       expect(service.fetch_data).to include(User)
     end
-    it 'Search all the Users' do
+    it 'Shows all the Users' do
       user.clinic_id = nil
       service = Search::User.new(user,params)
       x = User.all

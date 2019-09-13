@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Search::Clinic, type: :service do
-  context 'Service' do
+  context 'Search Service' do
     let!(:clinic) { FactoryBot.create(:clinic) }
     let!(:user) { FactoryBot.create(:user, clinic_id: clinic.id) }
     params = {}
-    it 'Search all the Clinics' do
+    it 'Shows all the Clinics' do
       user.clinic_id = nil
       service = Search::Clinic.new(user,params)
       expect(service.fetch_data.count).to eq(Clinic.all.count)
