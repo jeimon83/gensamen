@@ -15,5 +15,19 @@ RSpec.describe ConfigsController, type: :controller do
       get :index
       expect(response).to have_http_status(401)
     end
+    it 'Responds to JSON' do
+      get :index, format: :json
+      expect(response.content_type).to eq 'application/json; charset=utf-8'
+    end
+  end
+  context 'Get configs#show' do
+    let!(:config) { create :config }
+    let!(:admin) { FactoryBot.create(:user, clinic_id: nil) }
+    it 'Renders the Config' do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin)
+      get :show, params: { id: config.id }
+      expect(response.body['config']).to be_present
+      expect(response.content_type).to eq 'application/json; charset=utf-8'
+    end
   end
 end

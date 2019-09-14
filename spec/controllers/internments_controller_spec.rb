@@ -27,9 +27,12 @@ RSpec.describe InternmentsController, type: :controller do
     end
   end
   context 'Get internments#show' do
+    let!(:admin) { FactoryBot.create(:user, clinic_id: nil) }
     let!(:internment) { create :internment }
-    it 'Render JSON' do
+    it 'Renders the Internment' do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin)
       get :show, params: { id: internment.id }
+      expect(response.body['internment']).to be_present
       expect(response.content_type).to eq 'application/json; charset=utf-8'
     end
   end

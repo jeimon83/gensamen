@@ -27,9 +27,12 @@ RSpec.describe ContactsController, type: :controller do
     end
   end
   context 'Get contacts#show' do
+    let!(:admin) { FactoryBot.create(:user, clinic_id: nil) }
     let!(:contact) { create :contact }
-    it 'Render JSON' do
+    it 'Renders the Contact' do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin)
       get :show, params: { id: contact.id }
+      expect(response.body['contact']).to be_present
       expect(response.content_type).to eq 'application/json; charset=utf-8'
     end
   end
