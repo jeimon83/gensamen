@@ -18,8 +18,9 @@ require 'rails_helper'
 RSpec.describe Internment, type: :model do
   context 'Do validation tests' do
     @patient = FactoryBot.create(:patient)
+    @patient2 = FactoryBot.create(:patient)
     internment = FactoryBot.create(:internment, patient: @patient)
-    internment2 = FactoryBot.create(:internment, patient: @patient, end_date: nil)
+    internment2 = FactoryBot.build(:internment, patient: @patient2)
     it 'Ensures begin date presence' do
       internment.begin_date = nil
       expect(internment.valid?).to eq(false)
@@ -28,12 +29,11 @@ RSpec.describe Internment, type: :model do
       internment.type = nil
       expect(internment.valid?).to eq(false)
     end
-    it 'Will not save if internment is open' do
-      expect(internment2.save).to eq(false)
+    it 'Will not create another if internment is open' do
+      expect(internment.save).to eq(false)
     end
     it 'Should save correctly' do
-      internment3 = FactoryBot.build(:internment).patient
-      expect(internment3.save).to eq(true)
+      expect(internment2.save).to eq(true)
     end
   end
   context 'Testing Patient relation' do

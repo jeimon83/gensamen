@@ -26,10 +26,37 @@ RSpec.describe PatientsController, type: :controller do
     end
   end
   context 'GET patients#show' do
-    let!(:patient) { create :patient }
-    it 'Render JSON' do
+    let!(:clinic1)  { FactoryBot.create(:clinic) }
+    let!(:clinic2)  { FactoryBot.create(:clinic) }
+    let!(:admin)    { FactoryBot.create(:user, clinic_id: nil) }
+    let!(:user)    { FactoryBot.create(:user, clinic_id: clinic1.id) }
+    let!(:patient)  { FactoryBot.create(:patient, clinic_id: clinic2.id) }
+    it 'Renders the Patient' do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin)
       get :show, params: { id: patient.id }
+      expect(response.body['patient']).to be_present
       expect(response.content_type).to eq 'application/json; charset=utf-8'
+    end
+    it 'Renders Error: not authorized' do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
+      get :show, params: { id: patient.id }
+      expect(response.body).to match("Not Authorized")
+    end
+  end
+  context 'DELETE patients#destroy' do
+    let!(:clinic1)  { FactoryBot.create(:clinic) }
+    let!(:clinic2)  { FactoryBot.create(:clinic) }
+    let!(:admin)    { FactoryBot.create(:user, clinic_id: nil) }
+    let!(:user)    { FactoryBot.create(:user, clinic_id: clinic1.id) }
+    let!(:patient)  { FactoryBot.create(:patient, clinic_id: clinic2.id) }
+    it 'Destroys the patient' do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin)
+      expect { delete :destroy, params: { id: patient }}.to change { Patient.count }.by(-1)
+    end
+    it 'Renders Error: not authorized' do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
+      delete :destroy, params: { id: patient.id }
+      expect(response.body).to match("Not Authorized")
     end
   end
 end
