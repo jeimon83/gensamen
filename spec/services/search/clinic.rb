@@ -3,29 +3,35 @@
 require 'rails_helper'
 
 RSpec.describe Search::Clinic, type: :service do
-  context 'Search Service' do
-    let!(:clinic) { FactoryBot.create(:clinic) }
-    let!(:user) { FactoryBot.create(:user, clinic_id: clinic.id) }
-    params = {}
-    it 'Shows all the Clinics' do
-      user.clinic_id = nil
-      service = Search::Clinic.new(user,params)
-      expect(service.fetch_data.count).to eq(Clinic.all.count)
-      expect(service.filter_data).to eq(nil)
-      expect(service.data).to contain_exactly(*Clinic.all)
+  let(:service) { described_class.new(user, params) }
+  let!(:clinic) { FactoryBot.create(:clinic) }
+  let!(:other_clinic) { FactoryBot.create(:clinic) }
+  let!(:admin_user) { FactoryBot.create(:user, :admin) }
+  let!(:common_user) { FactoryBot.create(:user, clinic_id: clinic.id) }
+  let(:params) { {} }
+
+  describe 'Search Service' do
+    context 'when user is admin' do
+      let(:user) { admin_user }
+
+      it 'shows all the clinics' do
+        service.run
+
+        expect(service.data.count).to eq(Clinic.count)
+        expect(service.data).to contain_exactly(*Clinic.all)
+      end
     end
-    it 'Shows only one Clinic' do
-      service = Search::Clinic.new(user,params)
-      expect(service.fetch_data.count).to eq(1)
-      expect(service.filter_data).to eq(nil)
-      expect(service.data).to contain_exactly(*Clinic.where(id: user.clinic_id))
-      expect(service.data).to include(clinic)
-    end
-    it 'Returns nothing' do
-      user.clinic_id = Clinic.last.id + 1
-      service = Search::Clinic.new(user,params)
-      expect(service.fetch_data.count).to eq(0)
-      expect(service.fetch_data).not_to include(clinic)
+
+    context 'when user is not admin' do
+      let(:user) { common_user }
+
+      it 'returns the proper clinic' do
+        service.run
+
+        expect(service.data.count).to eq(1)
+        expect(service.data).to include(clinic)
+        expect(service.data).not_to include(other_clinic)
+      end
     end
   end
 end

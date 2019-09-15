@@ -22,8 +22,10 @@ class User < ApplicationRecord
 
   belongs_to :clinic, optional: true
 
-  validates :first_name, :last_name, presence: true
+  validates :first_name, :last_name, :role, presence: true
   validates :email, presence: true, uniqueness: true
+
+  before_validation :set_defaults
 
   scope :by_clinic, -> (clinic_id) {
     where(clinic_id: clinic_id)
@@ -40,6 +42,10 @@ class User < ApplicationRecord
     define_method :"#{role}?" do
       send(:role) == role
     end
+  end
+
+  def set_defaults
+    self.role ||= 'operador'
   end
 
   def to_json
