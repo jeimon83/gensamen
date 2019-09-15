@@ -45,21 +45,15 @@ class InternmentsController < ApplicationController
 
   def set_patient
      @patient = Patient.find(params[:patient_id])
-     check_user(@patient)
+     check_user_authorization(@patient)
   end
 
   def set_internment
      @internment = Internment.find(params[:id])
-     check_user(@internment)
+     check_user_authorization(@internment)
   end
 
   def internment_params
     params.require(:internment).permit(:begin_date, :type, :end_date) 
   end
-
-  def check_user(object)
-    authorized = AuthorizeObject.call(current_user, object).result
-    render json: { error: 'Not Authorized' }, status: 401 unless authorized
-  end
-
 end

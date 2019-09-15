@@ -45,21 +45,15 @@ class ContactsController < ApplicationController
 
   def set_patient
     @patient = Patient.find(params[:patient_id])
-    check_user(@patient)
+    check_user_authorization(@patient)
   end
 
   def set_contact
     @contact = Contact.find(params[:id])
-    check_user(@contact)
+    check_user_authorization(@contact)
   end
 
   def contact_params
     params.require(:contact).permit(:lastname, :firstname, :document_type, :document_number, :relationship, :phone)
   end
-
-  def check_user(object)
-    authorized = AuthorizeObject.call(current_user, object).result
-    render json: { error: 'Not Authorized' }, status: 401 unless authorized
-  end
-  
 end

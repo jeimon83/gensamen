@@ -56,16 +56,10 @@ class ClinicsController < ApplicationController
 
   def set_clinic
     @clinic = Clinic.find(params[:id])
-    check_user
-  end
-
-  def check_user
-    authorized = AuthorizeObject.call(current_user, @clinic).result
-    render json: { error: 'Not Authorized' }, status: 401 unless authorized
+    check_user_authorization(@clinic)
   end
 
   def clinic_params
     params.require(:clinic).permit(:name, :cuit, :habilitation, :beds_voluntary, :beds_judicial) 
   end
-
 end
