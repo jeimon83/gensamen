@@ -3,31 +3,61 @@
 require 'rails_helper'
 
 RSpec.describe ConfigsController, type: :controller do
-  context 'Get configs#index' do
-    let!(:user) { FactoryBot.create(:user) }
-    it 'Returns a success response' do
-      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
-      get :index
-      expect(response).to have_http_status(:success)
+  let!(:admin_user) { FactoryBot.create(:user, :admin) }
+  let!(:common_user) { FactoryBot.create(:user) }
+  let!(:config) { FactoryBot.create :config }
+  
+  describe 'GET #index' do
+    context 'when user is not admin' do
+      it 'returns a success response' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(common_user)
+        get :index
+        expect(response).to have_http_status(:success)
+      end
     end
-    it 'Returns a failure response' do
-      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(nil)
-      get :index
-      expect(response).to have_http_status(401)
+    context 'when authorize api request fails' do 
+      it 'returns a failure response' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(nil)
+        get :index
+        expect(response).to have_http_status(401)
+      end
     end
-    it 'Responds to JSON' do
-      get :index, format: :json
-      expect(response.content_type).to eq 'application/json; charset=utf-8'
+    context 'format view' do
+      it 'responds to JSON' do
+        get :index, format: :json
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
+      end
     end
   end
-  context 'Get configs#show' do
-    let!(:config) { create :config }
-    let!(:admin) { FactoryBot.create(:user, clinic_id: nil) }
-    it 'Renders the Config' do
-      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin)
-      get :show, params: { id: config.id }
-      expect(response.body['config']).to be_present
-      expect(response.content_type).to eq 'application/json; charset=utf-8'
+
+  describe 'GET #show' do
+    context 'when user is admin' do
+      it 'renders the Config' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
+        get :show, params: { id: config.id }
+        expect(response.body['config']).to be_present
+      end
     end
   end
+
+  describe 'PATCH #update' do
+    context 'when user is admin' do
+      it 'updates the config' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
+        patch :update, params: { id: config.id, config: { checklist: 'data' } }
+        expect(response.body['config']).to be_present
+        expect(response).to have_http_status(:success)
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    context 'when user is admin' do
+      it 'destroys the config' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
+        expect { delete :destroy, params: { id: config }}.to change {Config.count}.by(-1)
+      end
+    end
+  end
+
 end

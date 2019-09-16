@@ -16,7 +16,8 @@ RSpec.describe Search::Clinic, type: :service do
 
       it 'shows all the clinics' do
         service.run
-
+        puts Clinic.all.count
+        puts service.data.count
         expect(service.data.count).to eq(Clinic.count)
         expect(service.data).to contain_exactly(*Clinic.all)
       end
