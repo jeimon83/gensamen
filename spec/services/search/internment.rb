@@ -3,46 +3,36 @@
 require 'rails_helper'
 
 RSpec.describe Search::Internment, type: :service do
-  context 'Search Service' do
-    let!(:clinic1) { FactoryBot.create(:clinic) }
-    let!(:clinic2) { FactoryBot.create(:clinic) }
-    let!(:clinic3) { FactoryBot.create(:clinic) }
-    let!(:admin) { FactoryBot.create(:user, clinic_id: nil) }
-    let!(:user1) { FactoryBot.create(:user, clinic_id: clinic1.id) }
-    let!(:user3) { FactoryBot.create(:user, clinic_id: clinic3.id) }
-    let!(:patient1) { FactoryBot.create(:patient, clinic_id: clinic1.id) }
-    let!(:patient2) { FactoryBot.create(:patient, clinic_id: clinic2.id) }
-    let!(:patient3) { FactoryBot.create(:patient, clinic_id: clinic3.id) }
-    let!(:internment1) { FactoryBot.create(:internment, patient_id: patient1.id) }
-    let!(:internment2) { FactoryBot.create(:internment, patient_id: patient1.id) }
-    let!(:internment3) { FactoryBot.create(:internment, patient_id: patient2.id) }
-    let!(:internment4) { FactoryBot.create(:internment, patient_id: patient2.id) }
+  let(:service) { described_class.new(user, params) }
+  let!(:admin_user) { FactoryBot.create(:user, :admin) }
+  let!(:clinic) { FactoryBot.create(:clinic) }
+  let!(:common_user) { FactoryBot.create(:user, clinic_id: clinic.id) }
+  let!(:patient) { FactoryBot.create(:patient, clinic_id: clinic.id) }
+  let!(:internment) { FactoryBot.create(:internment, patient_id: patient.id) }
+  let(:params) { {} }  
+
+  describe 'Search Service' do
+    context 'when user is admin' do
+      let(:user) { admin_user }
         
-    params = {}
+      it 'shows all the internments' do
+        service.run
 
-    it 'Shows all the Internments' do
-      service = Search::Internment.new(admin,params)
-      x = Internment.all
-      expect(service.fetch_data.count).to eq(x.count)
-      expect(service.filter_data).to eq(nil)
-      expect(service.fetch_data).to include(Internment)
+        expect(service.data.count).to eq(Internment.all.count)
+        expect(service.data).to include(*Internment.all)
+      end
     end
 
-    it 'Shows the Internments of a Clinic if present in User' do
-      service = Search::Internment.new(user1,params)
-      x = Internment.joins(:patient).where(patients: { clinic_id: user1.clinic_id })
-      expect(service.fetch_data.count).to eq(x.count)
-      expect(service.filter_data).to eq(nil)
-      expect(service.fetch_data).to include(Internment)
-    end
+    context 'when user is not admin' do
+      let(:user) { common_user }
 
-    it 'Returns nothing' do
-      service = Search::Internment.new(user3,params)
-      x = Internment.joins(:patient).where(patients: { clinic_id: user3.clinic_id })
-      expect(service.fetch_data.count).to eq(x.count)
-      expect(service.filter_data).to eq(nil)
-      expect(service.fetch_data).to be_empty
-    end
+      it 'returns the proper internment' do
+        x = Internment.joins(:patient).where(patients: { clinic_id: user.clinic_id })
+        service.run
 
-  end
+        expect(service.data.count).to eq(x.count)
+        expect(service.data).to include(Internment)
+      end
+    end
+   end
 end

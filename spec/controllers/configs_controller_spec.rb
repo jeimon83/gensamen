@@ -23,7 +23,7 @@ RSpec.describe ConfigsController, type: :controller do
       end
     end
     context 'format view' do
-      it 'responds to JSON' do
+      it 'responds to json' do
         get :index, format: :json
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
@@ -32,7 +32,7 @@ RSpec.describe ConfigsController, type: :controller do
 
   describe 'GET #show' do
     context 'when user is admin' do
-      it 'renders the Config' do
+      it 'renders the config' do
         allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
         get :show, params: { id: config.id }
         expect(response.body['config']).to be_present

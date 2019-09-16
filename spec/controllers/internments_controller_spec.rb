@@ -26,7 +26,7 @@ RSpec.describe InternmentsController, type: :controller do
       end
     end
     context 'format view' do
-      it 'responds to JSON' do
+      it 'responds to json' do
         get :index, format: :json, params: { clinic_id: clinic.id, patient_id: patient.id }
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
