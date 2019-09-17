@@ -16,7 +16,7 @@
 #
 # ReportRequest Serializer
 class ReportRequestSerializer < ActiveModel::Serializer
-  attributes :id, :date, :type, :expiration_date, :answer
+  attributes :id, :requested_date, :type, :expiration_date, :answer
   belongs_to :clinic
   belongs_to :patient, optional: true
 end

@@ -51,6 +51,6 @@ class ReportRequestsController < ApplicationController
   end
 
   def report_request_params
-    params.require(:report_request).permit(:clinic_id, :patient_id, :date, :type, :expiration_date, :answer, documents: [])
+    params.require(:report_request).permit(:clinic_id, :patient_id, :requested_date, :type, :expiration_date, :answer, documents: [])
   end
 end
