@@ -4,10 +4,13 @@ Rails.application.routes.draw do
 
   get  '/check', to: 'application#service'
   post '/login', to: 'authentication#authenticate'
-  get '/profile', to: 'users#profile'
-  patch '/profile', to: 'users#update_profile'
-
-  resources :users, only: [:index]
+  
+  resources :users, only: [:index] do
+    member do
+      get   '/profile',   to: 'users#profile'
+      patch '/profile',   to: 'users#update_profile'
+    end
+  end
       
   resources :clinics, shallow: true do
     resources :patients do

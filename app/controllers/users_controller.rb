@@ -2,6 +2,8 @@
 
 # Users Controller
 class UsersController < ApplicationController
+  before_action :set_user, only: [:profile]
+
   def index
     service = Search::User.new(current_user, params)
     service.run
@@ -21,6 +23,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = current_user
+  end
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :phone, :password)
