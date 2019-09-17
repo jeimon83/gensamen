@@ -2,14 +2,17 @@
 
 # Users Controller
 class UsersController < ApplicationController
-
   def index
     service = Search::User.new(current_user, params)
     service.run
     render json: service.data, each_serializer: UserSerializer, meta: service.metadata
   end
 
-  def update
+  def profile
+    render json: current_user
+  end
+
+  def update_profile
     if current_user.update(user_params)
       render json: current_user, serializer: UserSerializer
     else
