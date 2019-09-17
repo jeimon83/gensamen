@@ -17,22 +17,25 @@
 require 'rails_helper'
 
 RSpec.describe Clinic, type: :model do
-  context 'Do validation tests' do
-    it 'Ensures name presence' do
-      clinic = Clinic.new(habilitation: '222-XX', cuit: '23-31060702-9')
-      expect(clinic.valid?).to eq(false)
-    end
-    it 'Ensures habilitation presence' do
-      clinic = Clinic.new(name: 'Clinic', cuit: '23-31060702-9')
-      expect(clinic.valid?).to eq(false)
-    end
-    it 'Ensures cuit presence' do
-      clinic = Clinic.new(name: 'Clinic', habilitation: '222-XX')
-      expect(clinic.valid?).to eq(false)
-    end
-    it 'Saves successfully' do
-      clinic = Clinic.new(name: 'Clinica', habilitation: '222-XX', cuit: '23-31060702-9')
-      expect(clinic.save).to eq(true)
-    end
+  let(:subject) { described_class.new(name: 'Nombre', cuit: '23310607029', habilitation: '3451') }
+
+  describe 'model attributes' do
+    context 'validation tests' do
+      it 'ensures name presence' do
+        subject.name = nil 
+        expect(subject.valid?).to eq(false)
+      end
+      it 'ensures habilitation presence' do
+        subject.habilitation = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'ensures cuit presence' do
+        subject.cuit = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'saves successfully' do
+        expect(subject.save).to eq(true)
+      end
+    end 
   end
 end
