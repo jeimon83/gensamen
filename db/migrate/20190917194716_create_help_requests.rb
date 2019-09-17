@@ -3,7 +3,7 @@ class CreateHelpRequests < ActiveRecord::Migration[6.0]
     create_table :help_requests do |t|
       t.references :clinic, null: false, foreign_key: true
       t.references :patient, null: false, foreign_key: true
-      t.date :date
+      t.date :requested_date
       t.string :type
 
       t.timestamps

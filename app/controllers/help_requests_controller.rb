@@ -51,6 +51,6 @@ class HelpRequestsController < ApplicationController
   end
 
   def help_request_params
-    params.require(:help_request).permit(:clinic_id, :patient_id, :date, :type, documents: [])
+    params.require(:help_request).permit(:clinic_id, :patient_id, :requested_date, :type, documents: [])
   end
 end
