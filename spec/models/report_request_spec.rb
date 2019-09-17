@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: report_requests
@@ -14,8 +12,9 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
-class ReportRequestSerializer < ActiveModel::Serializer
-  attributes :id, :requested_date, :type, :expiration_date, :answer
-  belongs_to :clinic
-  belongs_to :patient, optional: true
+
+require 'rails_helper'
+
+RSpec.describe ReportRequest, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

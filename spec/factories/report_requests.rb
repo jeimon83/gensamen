@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: report_requests
@@ -14,8 +12,14 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
-class ReportRequestSerializer < ActiveModel::Serializer
-  attributes :id, :requested_date, :type, :expiration_date, :answer
-  belongs_to :clinic
-  belongs_to :patient, optional: true
+
+FactoryBot.define do
+  factory :report_request do
+    clinic { nil }
+    patient { nil }
+    requested_date { "2019-09-17" }
+    type { "" }
+    expiration_date { "2019-09-17" }
+    answer { "MyString" }
+  end
 end

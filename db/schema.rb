@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_10_192757) do
+ActiveRecord::Schema.define(version: 2019_09_17_173700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 2019_09_10_192757) do
   create_table "report_requests", force: :cascade do |t|
     t.bigint "clinic_id", null: false
     t.bigint "patient_id", null: false
-    t.date "date"
+    t.date "requested_date"
     t.string "type"
     t.date "expiration_date"
     t.string "answer"
