@@ -15,11 +15,11 @@
 
 FactoryBot.define do
   factory :report_request do
-    clinic { nil }
-    patient { nil }
-    requested_date { "2019-09-17" }
-    type { "" }
-    expiration_date { "2019-09-17" }
-    answer { "MyString" }
+    clinic_id { clinic.id }
+    patient_id { nil }
+    requested_date { FFaker::Time.date }
+    type { "tipo" }
+    expiration_date { nil }
+    answer { "answer" }
   end
 end
