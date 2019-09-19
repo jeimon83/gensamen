@@ -54,7 +54,7 @@ RSpec.describe ReportRequestsController, type: :controller do
     context 'when user is admin' do
       it 'updates the report request' do
         allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
-        patch :update, params: { id: report_request.id, report_request: { requested_type: '20-03-2020' } }
+        patch :update, params: { id: report_request.id, report_request: { requested_date: '20-03-2020' } }
         expect(response.body['report_request']).to be_present
         expect(response).to have_http_status(:success)
       end
