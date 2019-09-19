@@ -13,9 +13,9 @@
 
 FactoryBot.define do
   factory :help_request do
-    clinic { nil }
-    patient { nil }
-    requested_date { "2019-09-17" }
-    type { "" }
+    clinic_id { clinic.id }
+    patient_id { nil }
+    requested_date { FFaker::Time.date }
+    type { "tipo" }
   end
 end
