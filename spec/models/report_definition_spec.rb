@@ -14,5 +14,26 @@
 require 'rails_helper'
 
 RSpec.describe ReportDefinition, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:subject) { described_class.new(name: 'Reporte', type: 'Tipo', periodicity: '20/02/2020', text: 'bla bla bla') }
+
+  describe 'model attributes' do
+    context 'validation tests' do
+      it 'ensures name presence' do
+        subject.name = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'ensures type presence' do
+        subject.type = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'ensures periodicity presence' do
+        subject.periodicity = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'saves successfully' do
+        expect(subject.save).to eq(true)
+      end
+    end
+  end
 end
+
