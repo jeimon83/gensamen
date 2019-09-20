@@ -46,6 +46,6 @@ class ReportDefinitionsController < ApplicationController
   end
 
   def report_definition_params
-    params.require(:report_definition).permit(:name, :type, :periodicity, :text)
+    params.require(:report_definition).permit(:name, :type, :period_type, :period_quantity, :text)
   end
 end

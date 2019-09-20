@@ -3,7 +3,8 @@ class CreateReportDefinitions < ActiveRecord::Migration[6.0]
     create_table :report_definitions do |t|
       t.string :name
       t.string :type
-      t.date :periodicity
+      t.string :period_type
+      t.integer :period_quantity
       t.text :text
 
       t.timestamps

@@ -2,20 +2,22 @@
 #
 # Table name: report_definitions
 #
-#  id          :bigint           not null, primary key
-#  name        :string
-#  type        :string
-#  periodicity :date
-#  text        :text
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id              :bigint           not null, primary key
+#  name            :string
+#  type            :string
+#  period_type     :string
+#  period_quantity :integer
+#  text            :text
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 FactoryBot.define do
   factory :report_definition do
-    name { 'Report Definition'}
+    name { 'Report Definition' }
     type { 'Tipo' }
-    periodicity { '20/02/2020' }
+    period_type { 'Mensual' }
+    period_quantity { 1 }
     text { 'Texto' }
   end
 end
