@@ -10,7 +10,7 @@ RSpec.describe PatientsController, type: :controller do
     user = FactoryBot.create(:user)
     it 'Returns a success response' do
       allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
-      get :index, params: { clinic_id: clinic.id }
+      get :index, params: { clinic_id: @clinic.id }
       expect(response).to have_http_status(:success)
     end
     it 'Responds to JSON' do
