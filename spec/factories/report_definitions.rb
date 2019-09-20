@@ -16,7 +16,6 @@ FactoryBot.define do
     name { 'Report Definition'}
     type { 'Tipo' }
     periodicity { '20/02/2020' }
-    expiration_date { nil }
-    answer { "answer" }
+    text { 'Texto' }
   end
 end

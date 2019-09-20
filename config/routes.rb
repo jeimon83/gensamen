@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   
   resources :configs
 
+  resources :report_definitions
+
   root to: 'application#service'
 
 end
