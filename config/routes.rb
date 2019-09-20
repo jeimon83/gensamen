@@ -12,9 +12,12 @@ Rails.application.routes.draw do
       resources :contacts
       resources :internments
     end
+    resources :report_requests
   end
-  resources :report_requests
+  
   resources :configs
+
+
 
   root to: 'application#service'
 
