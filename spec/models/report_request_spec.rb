@@ -37,6 +37,11 @@ RSpec.describe ReportRequest, type: :model do
         assc = ReportRequest.reflect_on_association(:clinic)
         expect(assc.macro).to eq :belongs_to
       end
+      it 'belongs to patient' do
+        assc = ReportRequest.reflect_on_association(:patient)
+        expect(assc.macro).to eq :belongs_to
+      end
+
     end
   end
 end
