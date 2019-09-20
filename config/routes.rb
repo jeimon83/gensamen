@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post '/login', to: 'authentication#authenticate'
   
   resources :users, only: [:index]
+  
   get   '/profile', to: 'users#profile',        as: 'profile'
   patch '/profile', to: 'users#update_profile', as: 'edit_profile'
       
