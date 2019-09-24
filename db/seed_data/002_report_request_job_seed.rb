@@ -29,10 +29,10 @@ end
 
 puts '###### cargando algunas internaciones'
 internments_data = [
-  { begin_date: '24/09/2019', type: 'Judicial',   patient_id: 1, end_date: nil },
+  { begin_date: '04/09/2019', type: 'Judicial',   patient_id: 1, end_date: nil },
   { begin_date: '20/09/2019', type: 'Judicial',   patient_id: 2, end_date: nil },
   { begin_date: '26/09/2019', type: 'Voluntaria', patient_id: 3, end_date: '25/10/2019' },
-  { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 4, end_date: nil },
+  { begin_date: '04/09/2019', type: 'Voluntaria', patient_id: 4, end_date: nil },
   { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 5, end_date: nil },
   { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 6, end_date: nil },
   { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 7, end_date: nil }
