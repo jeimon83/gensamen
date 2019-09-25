@@ -1,4 +1,4 @@
-<h1>"Reporte Automático: Internaciones Abiertas - Total: #{@pdf_report.count}"</h1>
+<h1>"Reporte Automático: Internaciones Abiertas"</h1>
 
 <table>
     <thead>
@@ -13,7 +13,6 @@
       <tr>
         <td><%= internaciones.clinic_id %></td>
         <td><%= internaciones.patient_id %></td>
-        <td><%= internaciones.requested_date %></td>
       </tr>
     <% end %>
   </tbody>

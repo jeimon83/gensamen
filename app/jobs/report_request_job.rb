@@ -2,6 +2,7 @@ class ReportRequestJob < ApplicationJob
   queue_as :default
 
   def perform
+    @pdf_report = []
     grab_open_internments
   end
 
@@ -12,7 +13,6 @@ class ReportRequestJob < ApplicationJob
 
   def first_open_internment
     @open_internment = @internment.first
-    @pdf_report = []
     check_days
   end
 
