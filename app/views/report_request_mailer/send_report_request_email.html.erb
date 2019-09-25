@@ -1,13 +1,23 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
-    <h1>Hello <%= @user.first_name %></h1>
-    <p>
-      Report Request - <%= @report %>
-    </p>
-    <p>Thanks for joining and have a great day!</p>
-  </body>
-</html>
+<h1>"Reporte Automático: Internaciones Abiertas - Total: #{@pdf_report.count}"</h1>
+
+<table>
+    <thead>
+      <tr>
+        <th>Clínica</th>
+        <th>Paciente</th>
+        <th>Requested Date</th>
+      </tr>
+    </thead>
+  <tbody>
+    <% @pdf_report.each do |internaciones| %>
+      <tr>
+        <td><%= internaciones.clinic_id %></td>
+        <td><%= internaciones.patient_id %></td>
+        <td><%= internaciones.requested_date %></td>
+      </tr>
+    <% end %>
+  </tbody>
+ </table>
+
+<p>Thanks for joining and have a great day!</p>
+ 

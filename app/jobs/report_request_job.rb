@@ -12,25 +12,31 @@ class ReportRequestJob < ApplicationJob
 
   def first_open_internment
     @open_internment = @internment.first
+    @pdf_report = []
     check_days
   end
 
   def check_days
     if Date.today == @open_internment.begin_date + 1.months - 10.days
-      generate_report
+      save_report
     else
       next_open_internment
     end   
   end
 
-  def generate_report
+  def save_report
     @patient = Patient.find(@open_internment.patient_id)
     @report = ReportRequest.create(clinic_id: @patient.clinic_id, patient_id: @patient.id, requested_date: Date.today, type: 'Automático')
+    @pdf_report << @report if @report
     next_open_internment
   end
 
   def next_open_internment
     @open_internment = @internment.where('id > ?', @open_internment.id).first
-    check_days if @open_internment
+    if @open_internment
+      check_days
+    else
+      ReportRequestMailer.send_report_request_email(@pdf_report).deliver_now
+    end
   end
 end
