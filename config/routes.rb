@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   end
   
   resources :configs
-
+  resources :comments
+  
   root to: 'application#service'
 
 end

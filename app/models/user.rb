@@ -22,6 +22,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   has_secure_password
   belongs_to :clinic, optional: true
+  has_many :comments
 
   def full_name
     [first_name, last_name].join(' ')
