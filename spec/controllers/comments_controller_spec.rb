@@ -4,18 +4,8 @@ require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
   let!(:user) { FactoryBot.create(:user) }
-  let!(:comment) { FactoryBot.create(:comment, user: user) }
-
-  describe "GET #index" do
-    it "returns http success" do
-      get :index
-      expect(response).to have_http_status(:success)
-    end
-    it 'responds to json' do
-       get :index, format: :json
-       expect(response.content_type).to eq 'application/json; charset=utf-8'
-    end
-  end
+  let!(:patient) { FactoryBot.create(:patient) }
+  let!(:comment) { FactoryBot.create(:comment, commentable: patient, user: user) }
 
   describe "GET #show" do
     it "renders the comment" do
