@@ -17,4 +17,5 @@ class Internment < ApplicationRecord
   self.inheritance_column = :_type_disabled
   validates :begin_date, :type, presence: true
   belongs_to :patient
+  has_many :comments, as: :commentable
 end

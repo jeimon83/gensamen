@@ -10,12 +10,14 @@ Rails.application.routes.draw do
   resources :clinics, shallow: true do
     resources :patients do
       resources :contacts
-      resources :internments
+      resources :internments do
+        resources :comments
+      end
+      resources :comments
     end
   end
   
   resources :configs
-  resources :comments
   
   root to: 'application#service'
 
