@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe CommentsController, type: :controller do
   let!(:user) { FactoryBot.create(:user) }
   let!(:patient) { FactoryBot.create(:patient) }
+  let!(:internment) { FactoryBot.create(:internment) }
   let!(:comment) { FactoryBot.create(:comment, commentable: patient, user: user) }
 
   describe "GET #show" do

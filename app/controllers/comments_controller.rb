@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :update, :destroy]
-  before_action :find_commentable, only: [:index, :create]
+  before_action :find_commentable, only: [:create]
 
   def create
     @comment = @commentable.comments.new(comment_params)
@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
 
   def find_commentable
     @commentable = Patient.find_by(id: params[:patient_id]) if params[:patient_id]
-    @commentable = Internments.find_by(id: params[:patient_id]) if params[:patient_id]
+    @commentable = Internment.find_by(id: params[:internment_id]) if params[:internment_id]
   end
 
   def set_comment
