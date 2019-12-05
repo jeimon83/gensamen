@@ -23,3 +23,5 @@ FactoryBot.define do
     beds_judicial { '0' }
   end
 end
+
+

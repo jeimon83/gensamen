@@ -6,10 +6,11 @@ class ContactsController < ApplicationController
   before_action :set_contact, only: [:show, :update, :destroy]
 
   def index
-    @contacts = @patient.contacts
-    render json: @contacts, status: :ok
+    service = Search::Contact.new(current_user, params)
+    service.run
+    render json: service.data, each_serializer: ContactSerializer, meta: service.metadata
   end
-
+   
   def create
     @contact = @patient.contacts.new(contact_params)
     if @contact.save
@@ -44,10 +45,12 @@ class ContactsController < ApplicationController
 
   def set_patient
     @patient = Patient.find(params[:patient_id])
+    check_user_authorization(@patient)
   end
 
   def set_contact
     @contact = Contact.find(params[:id])
+    check_user_authorization(@contact)
   end
 
   def contact_params
