@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 2019_09_20_193309) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+<<<<<<< HEAD
   create_table "report_requests", force: :cascade do |t|
     t.bigint "clinic_id", null: false
     t.bigint "patient_id", null: false
@@ -128,6 +129,8 @@ ActiveRecord::Schema.define(version: 2019_09_20_193309) do
     t.index ["patient_id"], name: "index_report_requests_on_patient_id"
   end
 
+=======
+>>>>>>> master
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "first_name"

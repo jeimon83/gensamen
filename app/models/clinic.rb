@@ -17,7 +17,7 @@
 # Clinic Model
 class Clinic < ApplicationRecord
   has_many :patients
-  has_many :users
+  has_many :users, dependent: :nullify
   has_many :help_requests
   validates :name, :habilitation, :cuit, presence: true
 

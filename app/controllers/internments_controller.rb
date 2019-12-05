@@ -6,10 +6,11 @@ class InternmentsController < ApplicationController
   before_action :set_internment, only: [:show, :update, :destroy]
 
   def index
-    @internments = @patient.internments
-    render json: @internments, status: :ok
+    service = Search::Internment.new(current_user, params)
+    service.run
+    render json: service.data, each_serializer: InternmentSerializer, meta: service.metadata
   end
-
+ 
   def create
     @internment = @patient.internments.new(internment_params)
     if @internment.save
@@ -44,14 +45,15 @@ class InternmentsController < ApplicationController
 
   def set_patient
      @patient = Patient.find(params[:patient_id])
+     check_user_authorization(@patient)
   end
 
   def set_internment
      @internment = Internment.find(params[:id])
+     check_user_authorization(@internment)
   end
 
   def internment_params
     params.require(:internment).permit(:begin_date, :type, :end_date) 
   end
-
 end
