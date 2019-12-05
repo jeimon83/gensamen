@@ -23,10 +23,15 @@
 #
 # Patient Model
 class Patient < ApplicationRecord
-  #validates :firstname, :lastname, presence: true
-  #validates :document_number, presence: true, uniqueness: true
   belongs_to :clinic
   has_many :contacts, dependent: :destroy
   has_many :internments
   has_many :report_requests
+
+  validates :firstname, :lastname, presence: true
+  validates :document_number, presence: true, uniqueness: true
+
+  scope :by_clinic, -> (clinic_id) {
+    where(clinic_id: clinic_id)
+  }
 end

@@ -6,8 +6,9 @@ class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :update, :destroy]
 
   def index
-    @patients = @clinic.patients
-    render json: @patients, status: :ok
+    service = Search::Patient.new(current_user, params)
+    service.run
+    render json: service.data, each_serializer: PatientSerializer, meta: service.metadata
   end
 
   def create
@@ -25,7 +26,7 @@ class PatientsController < ApplicationController
 
   def update
     if @patient.update(patient_params)
-      render json: @patient, serializer: patientSerializer
+      render json: @patient, serializer: PatientSerializer
     else
       render json: @patient.errors.full_messages, status: :unprocessable_entity
     end
@@ -44,10 +45,12 @@ class PatientsController < ApplicationController
 
   def set_clinic
     @clinic = Clinic.find(params[:clinic_id])
+    check_user_authorization(@clinic)
   end
 
   def set_patient
     @patient = Patient.find(params[:id])
+    check_user_authorization(@patient)
   end
 
   def patient_params

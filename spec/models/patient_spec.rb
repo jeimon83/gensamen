@@ -25,31 +25,33 @@
 require 'rails_helper'
 
 RSpec.describe Patient, type: :model do
-  context 'Do validation tests' do
-    let(:patient) { build(:patient) }
-    it 'Ensures first name presence' do
-      patient.firstname = nil
-      expect(patient.valid?).to eq(false)
-    end
-    it 'Ensures last name presence' do
-      patient.lastname = nil
-      expect(patient.valid?).to eq(false)
-    end
-    it 'Ensures document number presence' do
-      patient.document_number = nil
-      expect(patient.valid?).to eq(false)
-    end
-    it 'Should save successfully' do
-      expect(patient.save).to eq(true)
-    end
-  end
-  context 'Testing Clinic relation' do
-    it 'Belongs to a Clinic' do
-      expect { FactoryBot.build(:patient).clinic }.to_not raise_error
-    end
-    it 'Belongs to Clinic Test Nº2' do
-      assc = Patient.reflect_on_association(:clinic)
-      expect(assc.macro).to eq :belongs_to
+  let!(:clinic) { FactoryBot.create(:clinic) }
+  let(:subject) { described_class.new(firstname: 'Jaime', lastname: 'GM', document_number: '31060702', clinic: clinic) }
+
+  describe 'model attributes' do
+    context 'validation tests' do
+      it 'ensures first name presence' do
+        subject.firstname = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'ensures last name presence' do
+        subject.lastname = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'ensures document number presence' do
+        subject.document_number = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'saves successfully' do
+        expect(subject.save).to eq(true)
+      end
+      it 'belongs to clinic test nº1' do
+        expect { FactoryBot.create(:patient).clinic }.to_not raise_error
+      end
+      it 'belongs to clinic test nº2' do
+        assc = Patient.reflect_on_association(:clinic)
+        expect(assc.macro).to eq :belongs_to
+      end
     end
   end
 end
