@@ -22,7 +22,30 @@ FactoryBot.define do
     last_name { FFaker::Name.last_name }
     email { FFaker::Internet.email }
     password { FFaker::Internet.password }
-    association :clinic, strategy: :build
-    clinic_id { clinic.id }
+    clinic_id { nil }
+
+    trait :admin do
+      role { 'admin' }
+    end
+
+    trait :supervisor do
+      role { 'supervisor' }
+    end
+
+    trait :operador do
+      role { 'operador' }
+    end
+
+    trait :supervisor_clinica do
+      role { 'supervisor_clinica' }
+      association :clinic, strategy: :build
+      clinic_id { clinic.id }
+    end
+
+    trait :operador_clinica do
+      role { 'operador_clinica' }
+      association :clinic, strategy: :build
+      clinic_id { clinic.id }
+    end
   end
 end

@@ -14,8 +14,8 @@ require 'rails_helper'
 
 RSpec.describe Config, type: :model do
   context 'Do validation tests' do
-    let(:config) { build(:config) }
-    it 'Should save successfully' do
+    let!(:config) { build(:config) }
+    it 'Saves successfully' do
       expect(config.save).to eq(true)
     end
   end

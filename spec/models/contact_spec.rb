@@ -19,35 +19,33 @@
 require 'rails_helper'
 
 RSpec.describe Contact, type: :model do
-  context 'Do validation tests' do
-    let(:contact) { build(:contact) }
-    it 'Ensures name presence' do
-      contact.firstname = nil
-      expect(contact.valid?).to eq(false)
-    end
-    it 'Ensures lastname presence' do
-      contact.lastname = nil
-      expect(contact.valid?).to eq(false)
-    end
-    it 'Ensures phone presence' do
-      contact.phone = nil
-      expect(contact.valid?).to eq(false)
-    end
-    it 'Ensures document number presence' do
-      contact.document_number = nil
-      expect(contact.valid?).to eq(false)
-    end
-    it 'Should save successfully' do
-      expect(contact.save).to eq(true)
-    end
-  end
-  context 'Testing Patient relation' do
-    it 'Belongs to a Patient' do
-      expect { FactoryBot.build(:contact).patient }.to_not raise_error
-    end
-    it 'Belongs to Patient Test Nº2' do
-      assc = Contact.reflect_on_association(:patient)
-      expect(assc.macro).to eq :belongs_to
+  let!(:patient) { FactoryBot.create(:patient) }
+  let(:subject) { described_class.new(firstname: 'Juan', lastname: 'Perez', document_number: '2222222', phone: '4523-3419', patient_id: patient.id) } 
+  
+  describe 'model attributes' do
+    context 'validation tests' do
+      it 'ensures firstname presence' do
+        subject.firstname = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'ensures lastname presence' do
+        subject.lastname = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'ensures document number presence' do
+        subject.document_number = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'ensures phone presence' do
+        subject.phone = nil
+        expect(subject.valid?).to eq(false)
+      end
+      it 'belongs to a patient' do
+        expect { subject.patient }.to_not raise_error
+      end
+      it 'saves successfully' do
+        expect(subject.save).to eq(true)
+      end
     end
   end
 end
