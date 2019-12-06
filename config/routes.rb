@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :contacts
       resources :internments
     end
+    resources :help_requests
     resources :report_requests
     member do
       get :contacts

@@ -16,10 +16,12 @@
 
 # Clinic Model
 class Clinic < ApplicationRecord
-  validates :name, :habilitation, :cuit, presence: true
   has_many :patients
-  has_many :users
+  has_many :users, dependent: :nullify
+  has_many :help_requests
   has_many :report_requests
+
+  validates :name, :habilitation, :cuit, presence: true
 
   scope :by_clinic, -> (clinic_id) {
     where(id: clinic_id)
