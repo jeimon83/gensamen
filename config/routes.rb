@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resources :internments
     end
     resources :help_requests
+    resources :report_requests
     member do
       get :contacts
       get :internments
@@ -26,5 +27,4 @@ Rails.application.routes.draw do
   resources :report_definitions
 
   root to: 'application#service'
-
 end
