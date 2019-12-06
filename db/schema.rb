@@ -154,7 +154,10 @@ ActiveRecord::Schema.define(version: 2019_09_25_200605) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+<<<<<<< HEAD
   add_foreign_key "comments", "users"
+=======
+>>>>>>> master
   add_foreign_key "contacts", "patients"
   add_foreign_key "help_requests", "clinics"
   add_foreign_key "help_requests", "patients"
