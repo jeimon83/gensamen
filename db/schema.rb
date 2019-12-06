@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 2019_09_25_200605) do
 
   # These are extensions that must be enabled in order to support this database
@@ -78,6 +77,17 @@ ActiveRecord::Schema.define(version: 2019_09_25_200605) do
     t.index ["patient_id"], name: "index_contacts_on_patient_id"
   end
 
+  create_table "help_requests", force: :cascade do |t|
+    t.bigint "clinic_id", null: false
+    t.bigint "patient_id", null: false
+    t.date "requested_date"
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["clinic_id"], name: "index_help_requests_on_clinic_id"
+    t.index ["patient_id"], name: "index_help_requests_on_patient_id"
+  end
+
   create_table "internments", force: :cascade do |t|
     t.date "begin_date"
     t.string "type"
@@ -107,7 +117,16 @@ ActiveRecord::Schema.define(version: 2019_09_25_200605) do
     t.index ["clinic_id"], name: "index_patients_on_clinic_id"
   end
 
-<<<<<<< HEAD
+  create_table "report_definitions", force: :cascade do |t|
+    t.string "name"
+    t.string "type"
+    t.string "period_type"
+    t.integer "period_quantity"
+    t.text "text"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "report_requests", force: :cascade do |t|
     t.bigint "clinic_id", null: false
     t.bigint "patient_id", null: false
@@ -119,16 +138,6 @@ ActiveRecord::Schema.define(version: 2019_09_25_200605) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["clinic_id"], name: "index_report_requests_on_clinic_id"
     t.index ["patient_id"], name: "index_report_requests_on_patient_id"
-=======
-  create_table "report_definitions", force: :cascade do |t|
-    t.string "name"
-    t.string "type"
-    t.string "period_type"
-    t.integer "period_quantity"
-    t.text "text"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
->>>>>>> master
   end
 
   create_table "users", force: :cascade do |t|
@@ -147,6 +156,8 @@ ActiveRecord::Schema.define(version: 2019_09_25_200605) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "contacts", "patients"
+  add_foreign_key "help_requests", "clinics"
+  add_foreign_key "help_requests", "patients"
   add_foreign_key "internments", "patients"
   add_foreign_key "patients", "clinics"
   add_foreign_key "report_requests", "clinics"
