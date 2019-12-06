@@ -40,16 +40,14 @@ class ClinicsController < ApplicationController
     end
   end
 
-  def contacts
-    service = Search::Contact.new(current_user, params.merge(clinic_id: params[:id]))
-    service.run
-    render json: service.data, each_serializer: ContactSerializer, meta: service.metadata
-  end
-
   def internments
     service = Search::Internment.new(current_user, params.merge(clinic_id: params[:id]))
     service.run
     render json: service.data, each_serializer: InternmentSerializer, meta: service.metadata
+  end
+
+  def help_requests
+    ##### completar
   end
 
   private

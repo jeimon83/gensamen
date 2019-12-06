@@ -4,12 +4,7 @@
 class ReportRequestsController < ApplicationController
   before_action :set_clinic, only: [:index, :new, :create]
   before_action :set_report_request, only: [:show, :update, :destroy]
-
-  def index
-    @report_requests = @clinic.report_requests
-    render json: @report_requests, each_serializer: ReportRequestSerializer
-  end
-
+ 
   def create
     @report_request = @clinic.report_requests.new(report_request_params)
     if @report_request.save
@@ -17,10 +12,6 @@ class ReportRequestsController < ApplicationController
     else
       render json: @report_request.errors.full_messages, status: :unprocessable_entity
     end
-  end
-
-  def show
-    render json: @report_request, serializer: ReportRequestSerializer
   end
 
   def update
