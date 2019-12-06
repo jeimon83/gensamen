@@ -14,13 +14,13 @@ end
 
 puts '###### cargando algunos pacientes'
 patients_data = [
-  { firstname: 'Maria',    lastname: 'Pillud',   clinic_id: 1  },
-  { firstname: 'Luisa',    lastname: 'Torrent',  clinic_id: 1  },
-  { firstname: 'Javier',    lastname: 'García',  clinic_id: 1  },
-  { firstname: 'Micaela',  lastname: 'Donatti',  clinic_id: 1  },
-  { firstname: 'Juan',     lastname: 'López',    clinic_id: 2  },
-  { firstname: 'Fernando', lastname: 'Rakitich', clinic_id: 3  },
-  { firstname: 'Lionel',   lastname: 'Messi',    clinic_id: 4  }
+  { firstname: 'Maria',    lastname: 'Pillud',   document_number: '30777880', clinic_id: 1  },
+  { firstname: 'Luisa',    lastname: 'Torrent',  document_number: '30777881', clinic_id: 1  },
+  { firstname: 'Javier',   lastname: 'García',   document_number: '30777882', clinic_id: 1  },
+  { firstname: 'Micaela',  lastname: 'Donatti',  document_number: '30777883', clinic_id: 1  },
+  { firstname: 'Juan',     lastname: 'López',    document_number: '30777884', clinic_id: 2  },
+  { firstname: 'Fernando', lastname: 'Rakitich', document_number: '30777885', clinic_id: 3  },
+  { firstname: 'Lionel',   lastname: 'Messi',    document_number: '30777886', clinic_id: 4  }
 ]
 patients_data.each do |patient_data|
   puts "-> #{patient_data[:firstname]} #{patient_data[:lastname]}"
@@ -36,9 +36,36 @@ internments_data = [
   { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 5, end_date: nil },
   { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 6, end_date: nil },
   { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 7, end_date: nil }
-
 ]
 internments_data.each do |internment_data|
   puts "-> Fecha #{internment_data[:begin_date]} - Tipo #{internment_data[:type]}"
   Internment.create!(internment_data)
 end
+
+puts '###### cargando algunos Report Requests'
+reportrequests_data = [
+  { clinic_id: 1, patient_id: 1, requested_date: '03/03/2020', type: 'manual' },
+  { clinic_id: 2, patient_id: 4, requested_date: '03/03/2020', type: 'manual' },
+  { clinic_id: 3, patient_id: 7, requested_date: '03/03/2020', type: 'manual' }
+]
+reportrequests_data.each do |reportrequest_data|
+  puts "-> Fecha #{reportrequest_data[:requested_date]} - Tipo #{reportrequest_data[:type]}"
+  ReportRequest.create!(reportrequest_data)
+end
+
+puts '###### cargando algunos Help Requests'
+helprequests_data = [
+  { clinic_id: 1, patient_id: 1, requested_date: '03/03/2020', type: 'manual' },
+  { clinic_id: 2, patient_id: 4, requested_date: '03/03/2020', type: 'manual' },
+  { clinic_id: 3, patient_id: 7, requested_date: '03/03/2020', type: 'manual' }
+]
+helprequests_data.each do |helprequest_data|
+  puts "-> Fecha #{helprequest_data[:requested_date]} - Tipo #{helprequest_data[:type]}"
+  HelpRequest.create!(helprequest_data)
+end
+
+puts '###### cargando algunos comments'
+Comment.create(commentable: Patient.first, body: "Testing patient comments", user: User.first, comment_date: Time.now)
+Comment.create(commentable: Internment.first, body: "Testing internment comments", user: User.first, comment_date: Time.now)
+Comment.create(commentable: ReportRequest.first, body: "Testing report request comments", user: User.first, comment_date: Time.now)
+Comment.create(commentable: HelpRequest.first, body: "Testing help request comments", user: User.first, comment_date: Time.now)
