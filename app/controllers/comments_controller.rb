@@ -38,6 +38,8 @@ class CommentsController < ApplicationController
   def find_commentable
     @commentable = Patient.find_by(id: params[:patient_id]) if params[:patient_id]
     @commentable = Internment.find_by(id: params[:internment_id]) if params[:internment_id]
+    @commentable = ReportRequest.find_by(id: params[:reportrequest_id]) if params[:reportrequest_id]
+    @commentable = HelpRequest.find_by(id: params[:helprequest_id]) if params[:helprequest_id]
   end
 
   def set_comment
