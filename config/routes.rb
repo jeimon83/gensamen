@@ -13,19 +13,19 @@ Rails.application.routes.draw do
   resources :clinics, shallow: true do
     resources :patients do
       resources :contacts
-      resources :comments
+      resources :comments, only: [:index, :create], module: 'patients'
 
       resources :internments do
-        resources :comments
+        resources :comments, only: [:index, :create]
       end      
     end
     
     resources :help_requests do
-      resources :comments
+      resources :comments,only: [:index, :create]
     end
     
     resources :report_requests do
-      resources :comments
+      resources :comments, only: [:index, :create]
     end
     
     member do
@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       get :internments
     end
   end
+
+  resources :comments, only: [:show, :update, :destroy]
   
   resources :configs
   resources :report_definitions
