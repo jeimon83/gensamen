@@ -13,13 +13,21 @@ Rails.application.routes.draw do
   resources :clinics, shallow: true do
     resources :patients do
       resources :contacts
+      resources :comments
+
       resources :internments do
         resources :comments
-      end
+      end      
+    end
+    
+    resources :help_requests do
       resources :comments
     end
-    resources :help_requests
-    resources :report_requests
+    
+    resources :report_requests do
+      resources :comments
+    end
+    
     member do
       get :contacts
       get :internments
