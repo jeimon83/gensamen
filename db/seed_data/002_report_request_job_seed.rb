@@ -52,3 +52,14 @@ reportrequests_data.each do |reportrequest_data|
   puts "-> Fecha #{reportrequest_data[:requested_date]} - Tipo #{reportrequest_data[:type]}"
   ReportRequest.create!(reportrequest_data)
 end
+
+puts '###### cargando algunos Help Requests'
+helprequests_data = [
+  { clinic_id: 1, patient_id: 1, requested_date: '03/03/2020', type: 'manual' },
+  { clinic_id: 2, patient_id: 4, requested_date: '03/03/2020', type: 'manual' },
+  { clinic_id: 3, patient_id: 7, requested_date: '03/03/2020', type: 'manual' }
+]
+helprequests_data.each do |helprequest_data|
+  puts "-> Fecha #{helprequest_data[:requested_date]} - Tipo #{helprequest_data[:type]}"
+  HelpRequest.create!(helprequest_data)
+end
