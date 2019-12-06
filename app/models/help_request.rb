@@ -16,6 +16,7 @@ class HelpRequest < ApplicationRecord
   validates :requested_date, :type, presence: true
   belongs_to :clinic
   belongs_to :patient, optional: true
-
+  has_many :comments, as: :commentable
   has_many_attached :documents
+
 end

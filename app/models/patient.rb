@@ -25,7 +25,6 @@
 class Patient < ApplicationRecord
   belongs_to :clinic
   has_many :contacts, dependent: :destroy
-  has_many :internments
   has_many :comments, as: :commentable
   has_many :internments, dependent: :destroy
   has_many :help_requests

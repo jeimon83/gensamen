@@ -6,7 +6,8 @@ RSpec.describe CommentsController, type: :controller do
   let!(:user) { FactoryBot.create(:user) }
   let!(:patient) { FactoryBot.create(:patient) }
   let!(:internment) { FactoryBot.create(:internment) }
-  let!(:comment) { FactoryBot.create(:comment, commentable: patient, user: user) }
+  let!(:comment_patient) { FactoryBot.create(:comment, commentable: patient, user: user) }
+  let!(:comment_internment) { FactoryBot.create(:comment, commentable: internment, user: user) }
 
   describe "GET #show" do
     it "renders the comment" do

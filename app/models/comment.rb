@@ -13,7 +13,8 @@
 #
 
 class Comment < ApplicationRecord
-  validates :body, :user, :comment_date, presence: true
   belongs_to :user
   belongs_to :commentable, polymorphic: true
+
+  validates :body, :user, :comment_date, presence: true
 end
