@@ -14,13 +14,13 @@ end
 
 puts '###### cargando algunos pacientes'
 patients_data = [
-  { firstname: 'Maria',    lastname: 'Pillud',   clinic_id: 1  },
-  { firstname: 'Luisa',    lastname: 'Torrent',  clinic_id: 1  },
-  { firstname: 'Javier',    lastname: 'García',  clinic_id: 1  },
-  { firstname: 'Micaela',  lastname: 'Donatti',  clinic_id: 1  },
-  { firstname: 'Juan',     lastname: 'López',    clinic_id: 2  },
-  { firstname: 'Fernando', lastname: 'Rakitich', clinic_id: 3  },
-  { firstname: 'Lionel',   lastname: 'Messi',    clinic_id: 4  }
+  { firstname: 'Maria',    lastname: 'Pillud',   document_number: '30777880', clinic_id: 1  },
+  { firstname: 'Luisa',    lastname: 'Torrent',  document_number: '30777881', clinic_id: 1  },
+  { firstname: 'Javier',   lastname: 'García',   document_number: '30777882', clinic_id: 1  },
+  { firstname: 'Micaela',  lastname: 'Donatti',  document_number: '30777883', clinic_id: 1  },
+  { firstname: 'Juan',     lastname: 'López',    document_number: '30777884', clinic_id: 2  },
+  { firstname: 'Fernando', lastname: 'Rakitich', document_number: '30777885', clinic_id: 3  },
+  { firstname: 'Lionel',   lastname: 'Messi',    document_number: '30777886', clinic_id: 4  }
 ]
 patients_data.each do |patient_data|
   puts "-> #{patient_data[:firstname]} #{patient_data[:lastname]}"
