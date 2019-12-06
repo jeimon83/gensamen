@@ -1,6 +1,11 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :update, :destroy]
-  before_action :find_commentable, only: [:create]
+  before_action :find_commentable, only: [:index, :create]
+
+  def index
+    @comment = @commentable.comments
+    render json: @comment
+  end
 
   def create
     @comment = @commentable.comments.new comment_params
@@ -38,8 +43,8 @@ class CommentsController < ApplicationController
   def find_commentable
     @commentable = Patient.find_by(id: params[:patient_id]) if params[:patient_id]
     @commentable = Internment.find_by(id: params[:internment_id]) if params[:internment_id]
-    @commentable = ReportRequest.find_by(id: params[:reportrequest_id]) if params[:reportrequest_id]
-    @commentable = HelpRequest.find_by(id: params[:helprequest_id]) if params[:helprequest_id]
+    @commentable = ReportRequest.find_by(id: params[:report_request_id]) if params[:report_request_id]
+    @commentable = HelpRequest.find_by(id: params[:help_request_id]) if params[:help_request_id]
   end
 
   def set_comment
