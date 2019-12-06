@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   before_action :find_commentable, only: [:create]
 
   def create
-    @comment = @commentable.comments.new(comment_params)
+    @comment = @commentable.comments.new comment_params
     @comment.user = current_user
     if @comment.save
       render json: @comment, serializer: CommentSerializer
@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
   end
   
   def update
-     if @comment.update(comment_params)
+     if @comment.update comment_params
       render json: @comment, serializer: CommentSerializer
     else
       render json: @comment.errors.full_messages, status: :unprocessable_entity

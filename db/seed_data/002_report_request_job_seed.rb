@@ -63,3 +63,9 @@ helprequests_data.each do |helprequest_data|
   puts "-> Fecha #{helprequest_data[:requested_date]} - Tipo #{helprequest_data[:type]}"
   HelpRequest.create!(helprequest_data)
 end
+
+puts '###### cargando algunos comments'
+Comment.create(commentable: Patient.first, body: "Testing patient comments", user: User.first, comment_date: Time.now)
+Comment.create(commentable: Internment.first, body: "Testing internment comments", user: User.first, comment_date: Time.now)
+Comment.create(commentable: ReportRequest.first, body: "Testing report request comments", user: User.first, comment_date: Time.now)
+Comment.create(commentable: HelpRequest.first, body: "Testing help request comments", user: User.first, comment_date: Time.now)
