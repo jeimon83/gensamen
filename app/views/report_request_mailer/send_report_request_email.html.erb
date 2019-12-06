@@ -1,0 +1,21 @@
+<h1>"Reporte Automático: Internaciones Abiertas"</h1>
+
+<table>
+    <thead>
+      <tr>
+        <th>Clínica</th>
+        <th>Paciente</th>
+      </tr>
+    </thead>
+  <tbody>
+    <% @pdf_report.each do |internaciones| %>
+      <tr>
+        <td><%= internaciones.clinic_id %></td>
+        <td><%= internaciones.patient_id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+ </table>
+
+<p>Thanks for joining and have a great day!</p>
+ 

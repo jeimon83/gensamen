@@ -18,7 +18,8 @@
 class Clinic < ApplicationRecord
   validates :name, :habilitation, :cuit, presence: true
   has_many :patients
-  has_many :users, dependent: :nullify
+  has_many :users
+  has_many :report_requests
 
   scope :by_clinic, -> (clinic_id) {
     where(id: clinic_id)
