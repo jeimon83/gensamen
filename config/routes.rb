@@ -16,16 +16,16 @@ Rails.application.routes.draw do
       resources :comments, only: [:index, :create], module: 'patients'
 
       resources :internments do
-        resources :comments, only: [:index, :create]
+        resources :comments, only: [:index, :create], module: 'internments'
       end      
     end
     
     resources :help_requests do
-      resources :comments,only: [:index, :create]
+      resources :comments,only: [:index, :create], module: 'help_requests'
     end
     
     resources :report_requests do
-      resources :comments, only: [:index, :create]
+      resources :comments, only: [:index, :create], module: 'report_requests'
     end
     
     member do
