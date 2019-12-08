@@ -16,6 +16,5 @@
 #
 class ReportRequestSerializer < ActiveModel::Serializer
   attributes :id, :requested_date, :type, :expiration_date, :answer
-  belongs_to :clinic
-  belongs_to :patient
+  belongs_to :internment
 end

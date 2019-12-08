@@ -2,16 +2,20 @@
 
 # Report Request Controller
 class ReportRequestsController < ApplicationController
-  before_action :set_clinic, only: [:index, :new, :create]
+  before_action :set_internment, only: [:new, :create]
   before_action :set_report_request, only: [:show, :update, :destroy]
  
   def create
-    @report_request = @clinic.report_requests.new(report_request_params)
+    @report_request = @internment.report_requests.new(report_request_params)
     if @report_request.save
       render json: @report_request, serializer: ReportRequestSerializer
     else
       render json: @report_request.errors.full_messages, status: :unprocessable_entity
     end
+  end
+
+  def show
+    render json: @report_request, serializer: ReportRequestSerializer
   end
 
   def update
@@ -33,8 +37,8 @@ class ReportRequestsController < ApplicationController
 
   private
 
-  def set_clinic
-    @clinic = Clinic.find(params[:clinic_id])
+  def set_internment
+    @internment = Internment.find(params[:internment_id])
   end
 
   def set_report_request
@@ -42,6 +46,6 @@ class ReportRequestsController < ApplicationController
   end
 
   def report_request_params
-    params.require(:report_request).permit(:clinic_id, :patient_id, :requested_date, :type, :expiration_date, :answer, documents: [])
+    params.require(:report_request).permit(:interment_id, :requested_date, :type, :expiration_date, :answer, documents: [])
   end
 end

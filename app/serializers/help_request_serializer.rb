@@ -14,6 +14,5 @@
 #
 class HelpRequestSerializer < ActiveModel::Serializer
   attributes :id, :requested_date, :type
-  belongs_to :clinic
-  belongs_to :patient, optional: true
+  belongs_to :internment
 end

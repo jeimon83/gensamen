@@ -30,12 +30,12 @@ end
 puts '###### cargando algunas internaciones'
 internments_data = [
   { begin_date: '05/09/2019', type: 'Judicial',   patient_id: 1, end_date: nil },
-  { begin_date: '20/09/2019', type: 'Judicial',   patient_id: 2, end_date: nil },
-  { begin_date: '26/09/2019', type: 'Voluntaria', patient_id: 3, end_date: '25/10/2019' },
-  { begin_date: '05/09/2019', type: 'Voluntaria', patient_id: 4, end_date: nil },
-  { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 5, end_date: nil },
-  { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 6, end_date: nil },
-  { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 7, end_date: nil }
+  { begin_date: '20/09/2019', type: 'Judicial',   patient_id: 7, end_date: nil },
+  { begin_date: '26/09/2019', type: 'Voluntaria', patient_id: 6, end_date: '25/10/2019' },
+  { begin_date: '05/09/2019', type: 'Voluntaria', patient_id: 5, end_date: nil },
+  { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 2, end_date: nil },
+  { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 3, end_date: nil },
+  { begin_date: '15/09/2019', type: 'Voluntaria', patient_id: 4, end_date: nil }
 ]
 internments_data.each do |internment_data|
   puts "-> Fecha #{internment_data[:begin_date]} - Tipo #{internment_data[:type]}"
@@ -44,9 +44,9 @@ end
 
 puts '###### cargando algunos Report Requests'
 reportrequests_data = [
-  { clinic_id: 1, patient_id: 1, requested_date: '03/03/2020', type: 'manual' },
-  { clinic_id: 2, patient_id: 4, requested_date: '03/03/2020', type: 'manual' },
-  { clinic_id: 3, patient_id: 7, requested_date: '03/03/2020', type: 'manual' }
+  { internment_id: 1, requested_date: '03/03/2020', type: 'manual' },
+  { internment_id: 2, requested_date: '03/03/2020', type: 'manual' },
+  { internment_id: 3, requested_date: '03/03/2020', type: 'manual' }
 ]
 reportrequests_data.each do |reportrequest_data|
   puts "-> Fecha #{reportrequest_data[:requested_date]} - Tipo #{reportrequest_data[:type]}"
@@ -55,9 +55,9 @@ end
 
 puts '###### cargando algunos Help Requests'
 helprequests_data = [
-  { clinic_id: 1, patient_id: 1, requested_date: '03/03/2020', type: 'manual' },
-  { clinic_id: 2, patient_id: 4, requested_date: '03/03/2020', type: 'manual' },
-  { clinic_id: 3, patient_id: 7, requested_date: '03/03/2020', type: 'manual' }
+  { internment_id: 1, requested_date: '03/03/2020', type: 'manual' },
+  { internment_id: 2, requested_date: '03/03/2020', type: 'manual' },
+  { internment_id: 3, requested_date: '03/03/2020', type: 'manual' }
 ]
 helprequests_data.each do |helprequest_data|
   puts "-> Fecha #{helprequest_data[:requested_date]} - Tipo #{helprequest_data[:type]}"

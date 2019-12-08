@@ -16,8 +16,7 @@
 class ReportRequest < ApplicationRecord
   self.inheritance_column = :_type_disabled
   validates :requested_date, :type, presence: true
-  belongs_to :clinic
-  belongs_to :patient
+  belongs_to :internment
   has_many :comments, as: :commentable
   has_many_attached :documents
 end

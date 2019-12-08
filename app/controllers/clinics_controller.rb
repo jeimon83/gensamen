@@ -2,7 +2,7 @@
 
 # Clinics Controller
 class ClinicsController < ApplicationController
-  before_action :set_clinic, only: [:show, :update, :destroy]
+  before_action :set_clinic, only: [:show, :update, :destroy, :help_requests]
 
   def index
     service = Search::Clinic.new(current_user, params)
@@ -47,7 +47,8 @@ class ClinicsController < ApplicationController
   end
 
   def help_requests
-    ##### completar
+    @help_requests = @clinic.help_requests
+    render json: @help_requests
   end
 
   private

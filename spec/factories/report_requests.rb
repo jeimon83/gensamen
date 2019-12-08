@@ -15,8 +15,7 @@
 
 FactoryBot.define do
   factory :report_request do
-    clinic_id { clinic.id }
-    patient_id { patient.id }
+    internment_id { internment.id }
     requested_date { FFaker::Time.date }
     type { "tipo" }
     expiration_date { nil }
