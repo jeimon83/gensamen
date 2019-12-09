@@ -3,7 +3,7 @@
 # Report Request Controller
 class ReportRequestsController < ApplicationController
   before_action :set_internment, only: [:new, :create]
-  before_action :set_report_request, only: [:show, :update, :destroy]
+  before_action :set_report_request, only: [:update, :destroy]
  
   def create
     @report_request = @internment.report_requests.new(report_request_params)
@@ -12,10 +12,6 @@ class ReportRequestsController < ApplicationController
     else
       render json: @report_request.errors.full_messages, status: :unprocessable_entity
     end
-  end
-
-  def show
-    render json: @report_request, serializer: ReportRequestSerializer
   end
 
   def update

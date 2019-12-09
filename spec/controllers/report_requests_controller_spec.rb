@@ -7,16 +7,6 @@ RSpec.describe ReportRequestsController, type: :controller do
   let!(:internment) { FactoryBot.create(:internment) }
   let!(:report_request) { FactoryBot.create(:report_request, internment_id: internment.id) }
 
-  describe 'GET #show' do
-    context 'when user is authorized' do
-      it 'renders the report request' do
-        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
-        get :show, params: { id: report_request.id }
-        expect(response.body['report_request']).to be_present    
-      end
-    end
-  end
-
   describe 'PATCH #update' do
     context 'when user is authorized' do
       it 'updates the report request' do

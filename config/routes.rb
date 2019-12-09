@@ -34,11 +34,11 @@ Rails.application.routes.draw do
 
   end
 
-  resources :help_requests, only: [:show, :update, :destroy] do
+  resources :help_requests, only: [:update, :destroy] do
     resources :comments, only: [:index, :create], module: 'help_requests'
   end
 
-  resources :report_requests, only: [:show, :update, :destroy] do
+  resources :report_requests, only: [:update, :destroy] do
     resources :comments, only: [:index, :create], module: 'report_requests'
   end
 

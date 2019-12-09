@@ -3,7 +3,7 @@
 # Help Request Controller
 class HelpRequestsController < ApplicationController
   before_action :set_internment, only: [:new, :create]
-  before_action :set_help_request, only: [:show, :update, :destroy]
+  before_action :set_help_request, only: [:update, :destroy]
 
   def create
     @help_request = @internment.help_requests.new(help_request_params)
@@ -12,10 +12,6 @@ class HelpRequestsController < ApplicationController
     else
       render json: @help_request.errors.full_messages, status: :unprocessable_entity
     end
-  end
-
-  def show
-    render json: @help_request, serializer: HelpRequestSerializer
   end
 
   def update

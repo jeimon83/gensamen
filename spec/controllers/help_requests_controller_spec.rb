@@ -7,16 +7,6 @@ RSpec.describe HelpRequestsController, type: :controller do
   let!(:internment) { FactoryBot.create(:internment) }
   let!(:help_request) { FactoryBot.create(:help_request, internment_id: internment.id) }
 
-  describe 'GET #show' do
-    context 'when user is authorized' do
-      it 'renders the help report' do
-        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
-        get :show, params: { id: help_request.id }
-        expect(response.body['help_request']).to be_present    
-      end
-    end
-  end
-
   describe 'PATCH #update' do
     context 'when user is authorized' do
       it 'updates the help request' do
