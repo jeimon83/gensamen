@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
       resources :internments do
         resources :comments, only: [:index, :create], module: 'internments'
+        resources :report_requests, only: [:create]
+        resources :help_requests, only: [:create]
         member do
           get :report_requests
           get :help_requests
@@ -32,11 +34,11 @@ Rails.application.routes.draw do
 
   end
 
-  resources :help_requests, only: [:create, :show, :update, :destroy] do
+  resources :help_requests, only: [:show, :update, :destroy] do
     resources :comments, only: [:index, :create], module: 'help_requests'
   end
 
-  resources :report_requests, only: [:create, :show, :update, :destroy] do
+  resources :report_requests, only: [:show, :update, :destroy] do
     resources :comments, only: [:index, :create], module: 'report_requests'
   end
 
