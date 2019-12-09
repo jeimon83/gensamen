@@ -9,6 +9,5 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-# Config Model
 class Config < ApplicationRecord
 end

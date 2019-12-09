@@ -15,7 +15,6 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
-# Contact Model
 class Contact < ApplicationRecord
   belongs_to :patient
 

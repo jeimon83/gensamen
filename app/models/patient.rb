@@ -21,7 +21,6 @@
 #  clinic_id       :bigint
 #  medical_record  :text
 #
-# Patient Model
 class Patient < ApplicationRecord
   belongs_to :clinic
   has_many :contacts, dependent: :destroy

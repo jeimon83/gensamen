@@ -2,7 +2,7 @@
 
 # Clinics Controller
 class ClinicsController < ApplicationController
-  before_action :set_clinic, only: [:show, :update, :destroy, :help_requests]
+  before_action :set_clinic, only: [:show, :update, :destroy]
 
   def index
     service = Search::Clinic.new(current_user, params)
@@ -47,7 +47,8 @@ class ClinicsController < ApplicationController
   end
 
   def help_requests
-    @help_requests = @clinic.help_requests
+    @internments_by_clinic = Internment.joins(:patient).where(patients: { clinic_id: params[:id] })
+    @help_requests = HelpRequest.where(internment: @internments_by_clinic)
     render json: @help_requests
   end
 

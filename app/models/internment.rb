@@ -12,7 +12,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-# Internment Model
 class Internment < ApplicationRecord
   self.inheritance_column = :_type_disabled
   belongs_to :patient
