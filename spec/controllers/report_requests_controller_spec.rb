@@ -4,37 +4,8 @@ require 'rails_helper'
 
 RSpec.describe ReportRequestsController, type: :controller do
   let!(:user) { FactoryBot.create(:user) }
-  let!(:clinic) { FactoryBot.create(:clinic) }
-  let!(:patient) { FactoryBot.create(:patient) }
-  let!(:report_request) { FactoryBot.create(:report_request, clinic_id: clinic.id, patient_id: patient.id) }
-
-  describe 'GET #index' do
-    context 'when user is authorized' do
-      it 'returns an http success response' do
-        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
-        get :index, params: { clinic_id: clinic.id }
-        expect(response.body['report_request']).to be_present
-        expect(response).to have_http_status(:success)
-      end
-    end
-    context 'when authorize api request fails' do
-      it 'returns a failure response' do
-        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(nil)
-        get :index, params: { clinic_id: clinic.id }
-        expect(response).to have_http_status(401)
-      end
-    end
-  end
-
-  describe 'GET #show' do
-    context 'when user is authorized' do
-      it 'renders the report request' do
-        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
-        get :show, params: { id: report_request.id }
-        expect(response.body['report_request']).to be_present    
-      end
-    end
-  end
+  let!(:internment) { FactoryBot.create(:internment) }
+  let!(:report_request) { FactoryBot.create(:report_request, internment_id: internment.id) }
 
   describe 'PATCH #update' do
     context 'when user is authorized' do

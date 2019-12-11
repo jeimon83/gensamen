@@ -6,11 +6,11 @@ RSpec.describe CommentsController, type: :controller do
   let!(:user) { FactoryBot.create(:user) }
   let!(:patient) { FactoryBot.create(:patient) }
   let!(:internment) { FactoryBot.create(:internment) }
-  let!(:comment_patient) { FactoryBot.create(:comment, commentable: patient, user: user) }
-  let!(:comment_internment) { FactoryBot.create(:comment, commentable: internment, user: user) }
+  let!(:comment) { FactoryBot.create(:comment, commentable: patient, user: user) }
 
   describe "GET #show" do
     it "renders the comment" do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
       get :show, params: { id: comment.id }
       expect(response.body['comment']).to be_present
       expect(response.content_type).to eq 'application/json; charset=utf-8'
@@ -19,6 +19,7 @@ RSpec.describe CommentsController, type: :controller do
 
   describe "PATCH #update" do
     it "updates the comment" do
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
       patch :update, params: { id: comment.id, comment: { body: 'Texto' } }
       expect(response.body['comment']).to be_present
       expect(response).to have_http_status(:success)
@@ -27,7 +28,8 @@ RSpec.describe CommentsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the comment" do
-      expect { delete :destroy, params: { id: comment }}.to change { Comment.count }.by(-1)
+      allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(user)
+      expect { delete :destroy, params: { id: comment.id }}.to change { Comment.count }.by(-1)
     end
   end
 

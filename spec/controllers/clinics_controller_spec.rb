@@ -112,22 +112,22 @@ RSpec.describe ClinicsController, type: :controller do
     end
   end
 
-  describe 'GET #contacts' do
-    context 'when user is admin' do
-      it 'renders the contacts of the clinic' do
-        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
-        get :contacts, params: { id: clinic }
-        expect(response.body['contact']).to be_present
-      end
-    end
-  end
-
   describe 'GET #internments' do
     context 'when user is admin' do
       it 'renders the internments of the clinic' do
         allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
         get :internments, params: { id: clinic.id }
         expect(response.body['internment']).to be_present
+      end
+    end
+  end
+
+  describe 'GET #help_requests' do
+    context 'when user is admin' do
+      it 'renders the help requests by clinic' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
+        get :help_requests, params: { id: clinic.id }
+        expect(response.body['help_request']).to be_present
       end
     end
   end

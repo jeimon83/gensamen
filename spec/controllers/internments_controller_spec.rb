@@ -62,4 +62,24 @@ RSpec.describe InternmentsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #help_requests' do
+    context 'when user is admin' do
+      it 'renders the help requests by internment' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
+        get :help_requests, params: { id: internment.id }
+        expect(response.body['help_request']).to be_present
+      end
+    end
+  end
+
+  describe 'GET #report_requests' do
+    context 'when user is admin' do
+      it 'renders the report requests by internment' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
+        get :report_requests, params: { id: internment.id }
+        expect(response.body['report_request']).to be_present
+      end
+    end
+  end
 end

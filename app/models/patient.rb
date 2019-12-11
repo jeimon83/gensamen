@@ -21,14 +21,11 @@
 #  clinic_id       :bigint
 #  medical_record  :text
 #
-# Patient Model
 class Patient < ApplicationRecord
   belongs_to :clinic
   has_many :contacts, dependent: :destroy
   has_many :comments, as: :commentable
   has_many :internments, dependent: :destroy
-  has_many :help_requests
-  has_many :report_requests
 
   validates :firstname, :lastname, presence: true
   validates :document_number, presence: true, uniqueness: true

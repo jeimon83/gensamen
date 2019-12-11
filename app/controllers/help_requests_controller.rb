@@ -2,25 +2,16 @@
 
 # Help Request Controller
 class HelpRequestsController < ApplicationController
-  before_action :set_clinic, only: [:index, :new, :create]
-  before_action :set_help_request, only: [:show, :update, :destroy]
-
-  def index
-    @help_requests = @clinic.help_requests
-    render json: @help_requests, each_serializer: HelpRequestSerializer
-  end
+  before_action :set_internment, only: [:new, :create]
+  before_action :set_help_request, only: [:update, :destroy]
 
   def create
-    @report_request = @clinic.help_requests.new(help_request_params)
+    @help_request = @internment.help_requests.new(help_request_params)
     if @help_request.save
       render json: @help_request, serializer: HelpRequestSerializer
     else
       render json: @help_request.errors.full_messages, status: :unprocessable_entity
     end
-  end
-
-  def show
-    render json: @help_request, serializer: HelpRequestSerializer
   end
 
   def update
@@ -42,8 +33,8 @@ class HelpRequestsController < ApplicationController
 
   private
 
-  def set_clinic
-    @clinic = Clinic.find(params[:clinic_id])
+  def set_internment
+    @internment = Internment.find(params[:internment_id])
   end
 
   def set_help_request
@@ -51,6 +42,6 @@ class HelpRequestsController < ApplicationController
   end
 
   def help_request_params
-    params.require(:help_request).permit(:clinic_id, :patient_id, :requested_date, :type, documents: [])
+    params.require(:help_request).permit(:internment_id, :requested_date, :type, documents: [])
   end
 end

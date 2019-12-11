@@ -2,8 +2,8 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :update, :destroy]
 
   def index
-    @comment = @commentable.comments
-    render json: @comment
+    @comments = @commentable.comments
+    render json: @comments
   end
 
   def create
@@ -38,7 +38,7 @@ class CommentsController < ApplicationController
   end
 
   private
-
+ 
   def set_comment
     @comment = Comment.find(params[:id])
   end

@@ -3,7 +3,7 @@
 # Internment Controller
 class InternmentsController < ApplicationController
   before_action :set_patient, only: [:index, :new, :create]
-  before_action :set_internment, only: [:show, :update, :destroy]
+  before_action :set_internment, only: [:show, :update, :destroy, :help_requests, :report_requests]
 
   def index
     service = Search::Internment.new(current_user, params)
@@ -39,6 +39,16 @@ class InternmentsController < ApplicationController
     else
       render json: @internment.errors.full_messages, status: :unprocessable_entity
     end
+  end
+
+  def report_requests
+    @report_request = @internment.report_requests
+    render json: @report_request
+  end
+
+  def help_requests
+    @help_request = @internment.help_requests
+    render json: @help_request
   end
 
   private

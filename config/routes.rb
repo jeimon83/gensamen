@@ -11,27 +11,35 @@ Rails.application.routes.draw do
   patch '/profile', to: 'users#update_profile', as: 'edit_profile'
       
   resources :clinics, shallow: true do
+    
     resources :patients do
       resources :contacts
       resources :comments, only: [:index, :create], module: 'patients'
 
       resources :internments do
         resources :comments, only: [:index, :create], module: 'internments'
+        resources :report_requests, only: [:create]
+        resources :help_requests, only: [:create]
+        member do
+          get :report_requests
+          get :help_requests
+        end
       end      
     end
     
-    resources :help_requests do
-      resources :comments,only: [:index, :create], module: 'help_requests'
-    end
-    
-    resources :report_requests do
-      resources :comments, only: [:index, :create], module: 'report_requests'
-    end
-    
     member do
-      get :contacts
       get :internments
+      get :help_requests
     end
+
+  end
+
+  resources :help_requests, only: [:update, :destroy] do
+    resources :comments, only: [:index, :create], module: 'help_requests'
+  end
+
+  resources :report_requests, only: [:update, :destroy] do
+    resources :comments, only: [:index, :create], module: 'report_requests'
   end
 
   resources :comments, only: [:show, :update, :destroy]
