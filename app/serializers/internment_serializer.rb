@@ -13,6 +13,11 @@
 #  updated_at :datetime         not null
 #
 class InternmentSerializer < ActiveModel::Serializer
-  attributes :id, :type, :end_date, :begin_date, :clinic_id
+  attributes :id, :type, :end_date, :begin_date, :patient, :clinic
   belongs_to :patient
+
+  def clinic
+  	Clinic.find_by(id: self.object.patient.clinic_id)
+  end
+
 end
