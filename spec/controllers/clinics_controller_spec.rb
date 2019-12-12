@@ -9,6 +9,16 @@ RSpec.describe ClinicsController, type: :controller do
   let!(:common_user) { FactoryBot.create(:user, clinic_id: clinic.id) }
   let!(:other_user) { FactoryBot.create(:user, clinic_id: other_clinic.id) }
 
+   describe 'POST #create' do
+    context 'when user is admin' do
+      it 'creates a clinic' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(common_user)
+        clinic_attributes = FactoryBot.attributes_for(:clinic)
+        expect { post :create, params: { :clinic => clinic_attributes } }.to change { Clinic.count }.by(1)
+      end
+    end
+  end  
+
   describe 'GET #index' do
     context 'when user is not admin' do
       it 'returns an http success response' do
@@ -128,6 +138,40 @@ RSpec.describe ClinicsController, type: :controller do
         allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
         get :help_requests, params: { id: clinic.id }
         expect(response.body['help_request']).to be_present
+      end
+    end
+  end
+end
+
+RSpec.describe ClinicsController, type: :request do
+  let!(:clinic) { FactoryBot.create(:clinic) }
+  let!(:admin_user) { FactoryBot.create(:user, :admin) }
+  let!(:common_user) { FactoryBot.create(:user, clinic_id: clinic.id) }
+
+  describe 'Endpoint POST #create' do
+    context 'when user is admin' do
+      it 'creates a clinic' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(admin_user)
+        clinic_attributes = FactoryBot.attributes_for(:clinic)
+        expect { post '/clinics', params: { :clinic => clinic_attributes } }.to change { Clinic.count }.by(1)
+      end
+    end
+  end
+
+  describe 'Endpoint GET #index' do
+    context 'when user is not admin' do
+      it 'returns an http success response' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(common_user)
+        get '/clinics'
+        expect(response.body['clinic']).to be_present
+        expect(response).to have_http_status(:success)
+      end
+    end
+    context 'when authorize api request fails' do
+      it 'returns a failure response' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(nil)
+        get '/clinics'
+        expect(response).to have_http_status(401)
       end
     end
   end
