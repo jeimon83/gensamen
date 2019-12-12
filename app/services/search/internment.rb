@@ -9,10 +9,6 @@ module Search
       @data = @data.by_clinic(@clinic_id) if @clinic_id.present?
       @data = @data.where(patient_id: @patient_id) if @patient_id.present?
       
-      puts "****** Data: #{@data}"
-      @data.each do |d|
-        puts "datos: #{d.clinic_id}"
-      end
       return if @criteria.blank?
 
       @data = @data.where('LOWER(type) LIKE :criteria', criteria: "%#{@criteria}%")

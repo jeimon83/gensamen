@@ -77,3 +77,28 @@ RSpec.describe PatientsController, type: :controller do
     end
   end
 end
+
+RSpec.describe PatientsController, type: :request do
+  let!(:clinic) { FactoryBot.create(:clinic) }
+  let!(:patient) { FactoryBot.create(:patient) }
+  let!(:admin_user) { FactoryBot.create(:user, :admin) }
+  let!(:common_user) { FactoryBot.create(:user, clinic_id: clinic.id) }
+
+  describe 'Endpoint GET #index' do
+    context 'when user is not admin' do
+      it 'returns an http success response' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(common_user)
+        get '/clinics'
+        expect(response.body['clinic']).to be_present
+        expect(response).to have_http_status(:success)
+      end
+    end
+    context 'when authorize api request fails' do
+      it 'returns a failure response' do
+        allow(AuthorizeApiRequest).to receive_message_chain(:call, :result).and_return(nil)
+        get '/clinics'
+        expect(response).to have_http_status(401)
+      end
+    end
+  end
+end
