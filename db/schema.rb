@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_08_193237) do
+ActiveRecord::Schema.define(version: 2019_12_20_160119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,9 @@ ActiveRecord::Schema.define(version: 2019_12_08_193237) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "internment_id"
+    t.bigint "clinic_id"
+    t.text "description"
+    t.index ["clinic_id"], name: "index_help_requests_on_clinic_id"
     t.index ["internment_id"], name: "index_help_requests_on_internment_id"
   end
 
@@ -152,6 +155,7 @@ ActiveRecord::Schema.define(version: 2019_12_08_193237) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "contacts", "patients"
+  add_foreign_key "help_requests", "clinics"
   add_foreign_key "help_requests", "internments"
   add_foreign_key "internments", "patients"
   add_foreign_key "patients", "clinics"

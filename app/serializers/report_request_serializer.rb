@@ -16,4 +16,5 @@
 class ReportRequestSerializer < ActiveModel::Serializer
   attributes :id, :requested_date, :type, :expiration_date, :answer
   belongs_to :internment
+  has_many :comments, as: :commentable
 end

@@ -8,11 +8,13 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  internment_id  :bigint
+#  clinic_id      :bigint
+#  description    :text
 #
 
 FactoryBot.define do
   factory :help_request do
-    internment_id { internment.id }
+    clinic_id { clinic.id }
     requested_date { FFaker::Time.date }
     type { "tipo" }
   end

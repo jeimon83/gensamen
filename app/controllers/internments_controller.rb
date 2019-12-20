@@ -47,7 +47,7 @@ class InternmentsController < ApplicationController
   end
 
   def help_requests
-    @help_request = @internment.help_requests
+    @help_request = HelpRequest.where(internment_id: @internment)
     render json: @help_request
   end
 

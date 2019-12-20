@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe HelpRequestsController, type: :controller do
   let!(:user) { FactoryBot.create(:user) }
-  let!(:internment) { FactoryBot.create(:internment) }
-  let!(:help_request) { FactoryBot.create(:help_request, internment_id: internment.id) }
+  let!(:clinic) { FactoryBot.create(:clinic) }
+  let!(:help_request) { FactoryBot.create(:help_request, clinic_id: clinic.id) }
 
   describe 'PATCH #update' do
     context 'when user is authorized' do

@@ -8,13 +8,15 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  internment_id  :bigint
+#  clinic_id      :bigint
+#  description    :text
 #
 
 require 'rails_helper'
 
 RSpec.describe HelpRequest, type: :model do
-  let!(:internment) { FactoryBot.create(:internment) }
-  let(:subject) { described_class.new(internment_id: internment.id, requested_date: '20/02/2020', type: 'Tipo') }
+  let!(:clinic) { FactoryBot.create(:clinic) }
+  let(:subject) { described_class.new(clinic_id: clinic.id, requested_date: '20/02/2020', type: 'Tipo') }
 
   describe 'model attributes' do
     context 'validation tests' do
@@ -29,8 +31,8 @@ RSpec.describe HelpRequest, type: :model do
       it 'saves successfully' do
         expect(subject.save).to eq(true)
       end
-      it 'belongs to internment' do
-        assc = HelpRequest.reflect_on_association(:internment)
+      it 'belongs to clinic' do
+        assc = HelpRequest.reflect_on_association(:clinic)
         expect(assc.macro).to eq :belongs_to
       end
     end
