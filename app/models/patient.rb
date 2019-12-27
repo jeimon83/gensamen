@@ -33,4 +33,8 @@ class Patient < ApplicationRecord
   scope :by_clinic, -> (clinic_id) {
     where(clinic_id: clinic_id)
   }
+
+  def full_name
+  	[firstname, lastname].join(' ')
+  end
 end

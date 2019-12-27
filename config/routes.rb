@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         member do
           get :report_requests
           get :help_requests
+          get :generate_pdf
         end
       end      
     end
