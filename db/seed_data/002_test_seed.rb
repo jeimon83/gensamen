@@ -59,18 +59,19 @@ end
 
 puts '###### cargando algunos Help Requests'
 helprequests_data = [
-  { internment_id: 1, requested_date: '03/03/2020', type: 'manual' },
-  { internment_id: 2, requested_date: '03/03/2020', type: 'manual' },
-  { internment_id: 3, requested_date: '03/03/2020', type: 'manual' },
-  { internment_id: 4, requested_date: '03/03/2020', type: 'manual' },
-  { internment_id: 5, requested_date: '03/03/2020', type: 'manual' },
-  { internment_id: 6, requested_date: '03/03/2020', type: 'manual' },
-  { internment_id: 7, requested_date: '03/03/2020', type: 'manual' },
-  { internment_id: 8, requested_date: '03/03/2020', type: 'manual' },
-  { internment_id: 9, requested_date: '03/03/2020', type: 'manual' }
+  { clinic_id: 1,     requested_date: '03/03/2020', title: 'título', description: "contexto" },
+  { clinic_id: 1,     requested_date: '03/03/2020', title: 'título', description: "contexto" },
+  { clinic_id: 2,     requested_date: '03/03/2020', title: 'título', description: "contexto" },
+  { clinic_id: 3,     requested_date: '03/03/2020', title: 'título', description: "contexto" },
+  { clinic_id: 4,     requested_date: '03/03/2020', title: 'título', description: "contexto" },
+  { internment_id: 1, requested_date: '03/03/2020', title: 'título', description: "contexto" },
+  { internment_id: 4, requested_date: '03/03/2020', title: 'título', description: "contexto" },
+  { internment_id: 3, requested_date: '03/03/2020', title: 'título', description: "contexto" },
+  { internment_id: 3, requested_date: '03/05/2020', title: 'título', description: "contexto" },
+  { internment_id: 2, requested_date: '03/03/2020', title: 'título', description: "contexto" }
 ]
 helprequests_data.each do |helprequest_data|
-  puts "-> Fecha #{helprequest_data[:requested_date]} - Tipo #{helprequest_data[:type]}"
+  puts "-> Fecha #{helprequest_data[:requested_date]} - Título #{helprequest_data[:title]}"
   HelpRequest.create!(helprequest_data)
 end
 
