@@ -13,6 +13,13 @@
 #
 
 class CommentSerializer < ActiveModel::Serializer
-  attributes :id, :body, :commentable_type, :commentable_id, :comment_date
-  belongs_to :user
+  attributes :id, :body, :commentable_type, :commentable_id, :comment_date, :user
+
+  def user
+    {
+      id: self.object.user.id,
+      email: self.object.user.email,
+      full_name: self.object.user.full_name
+    }
+  end
 end
