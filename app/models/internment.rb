@@ -20,7 +20,7 @@ class Internment < ApplicationRecord
   has_many :comments, as: :commentable
 
   validates :begin_date, :type, presence: true
-  validate :internment_open, on: :create
+  #validate :internment_open, on: :create
   validate :beds_availability, on: :create
 
   scope :by_clinic, -> (clinic_id) { 
@@ -41,7 +41,7 @@ class Internment < ApplicationRecord
     beds_available = self.patient.clinic.total_beds
     beds_used = self.patient.clinic.internments.open
     return true if beds_used < beds_available
+
     self.errors.add(:base, 'La Clínica no tiene camas disponibles') 
-    
   end
 end
