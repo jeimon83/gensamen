@@ -53,6 +53,7 @@ class InternmentsController < ApplicationController
 
   def close
     @internment.update(end_date: Time.now)
+    render json: @internment
   end
 
   private
