@@ -52,8 +52,11 @@ class InternmentsController < ApplicationController
   end
 
   def close
-    @internment.update(end_date: Time.now)
-    render json: @internment
+    if @internment.update(end_date: Time.now)
+      render json: @internment
+    else
+      render json: @internment.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   private
