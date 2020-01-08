@@ -21,10 +21,13 @@ class Internment < ApplicationRecord
 
   validates :begin_date, :type, presence: true
   validate :internment_open, on: :create
+  validate :beds_availability, on: :create
 
-  scope :by_clinic, -> (clinic_id) {
+  scope :by_clinic, -> (clinic_id) { 
     joins(:patient).where(patients: { clinic_id: clinic_id })
   }
+
+  scope :open, -> { where(end_date: nil) }
 
   delegate :clinic_id, to: :patient
 
@@ -32,5 +35,13 @@ class Internment < ApplicationRecord
     return true unless self.patient.internments.where(end_date: nil).any?
 
     self.errors.add(:base, 'El paciente ya tiene una internación abierta')
+  end
+
+  def beds_availability
+    beds_available = self.patient.clinic.total_beds
+    beds_used = self.patient.clinic.internments.open
+    return true if beds_used < beds_available
+    self.errors.add(:base, 'La Clínica no tiene camas disponibles') 
+    
   end
 end

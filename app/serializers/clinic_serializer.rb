@@ -17,6 +17,6 @@ class ClinicSerializer < ActiveModel::Serializer
   attributes :id, :name, :cuit, :habilitation, :beds_voluntary, :beds_judicial, :internments_enabled
 
   def internments_enabled
-    self.object.beds_voluntary.to_i + self.object.beds_judicial.to_i
+    self.object.beds_voluntary.to_i + self.object.beds_judicial.to_i != 0
   end
 end

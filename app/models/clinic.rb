@@ -28,4 +28,9 @@ class Clinic < ApplicationRecord
   def clinic_id
     self.id
   end
+
+  def total_beds
+    self.beds_voluntary + self.beds_judicial
+  end
+
 end
