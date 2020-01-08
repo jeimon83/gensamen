@@ -3,7 +3,7 @@
 # Internment Controller
 class InternmentsController < ApplicationController
   before_action :set_patient, only: [:index, :new, :create]
-  before_action :set_internment, only: [:show, :update, :destroy, :help_requests, :report_requests, :close]
+  before_action :set_internment, only: [:show, :update, :destroy, :help_requests, :report_requests, :generate_pdf, :close]
 
   def index
     service = Search::Internment.new(current_user, params)
@@ -22,6 +22,14 @@ class InternmentsController < ApplicationController
 
   def show
     render json: @internment
+  end
+
+  def generate_pdf    
+    pdf = InternmentPdf::Generator.new(internment: @internment)
+    pdf.generate
+    send_data pdf.render, 
+    filename: "internment_data_#{@internment.created_at.strftime("%d-%m-%Y")}.pdf",
+    type: 'application/pdf', disposition: 'inline'
   end
 
   def update
