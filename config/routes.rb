@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         member do
           get :report_requests
           get :help_requests
+          post :close
         end
       end      
     end

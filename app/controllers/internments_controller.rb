@@ -3,7 +3,7 @@
 # Internment Controller
 class InternmentsController < ApplicationController
   before_action :set_patient, only: [:index, :new, :create]
-  before_action :set_internment, only: [:show, :update, :destroy, :help_requests, :report_requests]
+  before_action :set_internment, only: [:show, :update, :destroy, :help_requests, :report_requests, :close]
 
   def index
     service = Search::Internment.new(current_user, params)
@@ -49,6 +49,10 @@ class InternmentsController < ApplicationController
   def help_requests
     @help_request = HelpRequest.where(internment_id: @internment)
     render json: @help_request
+  end
+
+  def close
+    @internment.update(end_date: Time.now)
   end
 
   private
