@@ -23,7 +23,7 @@ class Internment < ApplicationRecord
   validate :internment_open, on: :create
   validate :beds_availability, on: :create
 
-  scope :by_clinic, -> (clinic_id) {
+  scope :by_clinic, lambda { |clinic_id|
     joins(:patient).where(patients: { clinic_id: clinic_id })
   }
 
@@ -44,7 +44,4 @@ class Internment < ApplicationRecord
 
     errors.add(:base, 'La Clínica no tiene camas disponibles')
   end
-
-  #QUE CALCULE SI LAS CAMAS SON JUDICIALES O VOLUNTARIAS
-  
 end
