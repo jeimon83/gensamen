@@ -20,10 +20,10 @@ class Internment < ApplicationRecord
   has_many :comments, as: :commentable
 
   validates :begin_date, :type, presence: true
-  #validate :internment_open, on: :create
+  validate :internment_open, on: :create
   validate :beds_availability, on: :create
 
-  scope :by_clinic, -> (clinic_id) { 
+  scope :by_clinic, -> (clinic_id) {
     joins(:patient).where(patients: { clinic_id: clinic_id })
   }
 
@@ -34,14 +34,17 @@ class Internment < ApplicationRecord
   def internment_open
     return true unless self.patient.internments.where(end_date: nil).any?
 
-    self.errors.add(:base, 'El paciente ya tiene una internación abierta')
+    errors.add(:base, 'El paciente ya tiene una internación abierta')
   end
 
   def beds_availability
     beds_available = self.patient.clinic.total_beds
-    beds_used = self.patient.clinic.internments.open
+    beds_used = self.patient.clinic.internments.open.count
     return true if beds_used < beds_available
 
-    self.errors.add(:base, 'La Clínica no tiene camas disponibles') 
+    errors.add(:base, 'La Clínica no tiene camas disponibles')
   end
+
+  #QUE CALCULE SI LAS CAMAS SON JUDICIALES O VOLUNTARIAS
+  
 end

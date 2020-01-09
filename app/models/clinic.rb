@@ -19,7 +19,7 @@ class Clinic < ApplicationRecord
   has_many :patients
   has_many :internments, through: :patients
   has_many :users, dependent: :nullify
-  
+
   validates :name, :habilitation, :cuit, presence: true
 
   scope :by_clinic, -> (clinic_id) {
@@ -33,5 +33,4 @@ class Clinic < ApplicationRecord
   def total_beds
     self.beds_voluntary.to_i + self.beds_judicial.to_i
   end
-
 end
