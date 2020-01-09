@@ -23,7 +23,7 @@ class Clinic < ApplicationRecord
   validates :name, :habilitation, :cuit, presence: true
 
   scope :by_clinic, -> (clinic_id) {
-    where(id: clinic_id)
+      where(id: clinic_id)
   }
 
   def clinic_id
@@ -31,6 +31,7 @@ class Clinic < ApplicationRecord
   end
 
   def total_beds
-    self.beds_voluntary.to_i + self.beds_judicial.to_i
+    self.beds_voluntary.to_i if bed_type == 'judicial'
+    self.beds_judicial.to_i if bed_type == 'voluntario'
   end
 end

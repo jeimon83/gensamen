@@ -20,10 +20,16 @@ class Internment < ApplicationRecord
   has_many :comments, as: :commentable
 
   validates :begin_date, :type, presence: true
+
+  validates :type, inclusion: {
+    in: %w[judicial voluntario],
+    message: '%<value>s no es una internacion valida'
+  }
+
   validate :internment_open, on: :create
   validate :beds_availability, on: :create
 
-  scope :by_clinic, lambda { |clinic_id|
+  scope :by_clinic, -> (clinic_id) {
     joins(:patient).where(patients: { clinic_id: clinic_id })
   }
 
@@ -38,10 +44,17 @@ class Internment < ApplicationRecord
   end
 
   def beds_availability
-    beds_available = self.patient.clinic.total_beds
-    beds_used = self.patient.clinic.internments.open.count
-    return true if beds_used < beds_available
+    unless internment_open 
+      beds_available = self.patient.clinic.beds_judicial.to_i if type == "judicial"
+      beds_available = self.patient.clinic.beds_voluntary.to_i if type == "voluntario"
+      #beds_available = self.patient.clinic.total_beds(type)
+      unless beds_available == 0
+        beds_used = self.patient.clinic.internments.open.where(type: type).count
+        return true if beds_used < beds_available
+      end
 
-    errors.add(:base, 'La Clínica no tiene camas disponibles')
+      errors.add(:base, "La Clínica no tiene camas disponibles para una internación de tipo #{type}")
+    end
   end
+
 end
