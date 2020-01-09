@@ -34,4 +34,7 @@ class Clinic < ApplicationRecord
     self.beds_voluntary.to_i if bed_type == 'judicial'
     self.beds_judicial.to_i if bed_type == 'voluntario'
   end
+
+  # RECORDATORIO: LA CLINICA NO DEBERIA PERMITIR MODIFICAR LA CANTIDAD DE CAMAS
+  # TANTO VOLUNTARIAS COMO JUDICIALES SI EXISTEN INTERNACIONES ACTIVAS
 end

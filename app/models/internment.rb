@@ -21,10 +21,11 @@ class Internment < ApplicationRecord
 
   validates :begin_date, :type, presence: true
 
-  validates :type, inclusion: {
-    in: %w[judicial voluntario],
-    message: '%<value>s no es una internacion valida'
-  }
+  # REVISAR
+  #validates :type, inclusion: {
+  #  in: %w[judicial voluntario],
+  #  message: '%<value>s no es una internación válida'
+  #}
 
   validate :internment_open, on: :create
   validate :beds_availability, on: :create
