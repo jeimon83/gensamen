@@ -44,17 +44,17 @@ class Internment < ApplicationRecord
   end
 
   def beds_availability
-    unless internment_open 
+    #unless internment_open 
       beds_available = self.patient.clinic.beds_judicial.to_i if type == "judicial"
       beds_available = self.patient.clinic.beds_voluntary.to_i if type == "voluntario"
       #beds_available = self.patient.clinic.total_beds(type)
-      unless beds_available == 0
+      if beds_available != 0
         beds_used = self.patient.clinic.internments.open.where(type: type).count
         return true if beds_used < beds_available
       end
 
       errors.add(:base, "La Clínica no tiene camas disponibles para una internación de tipo #{type}")
     end
-  end
+  #end
 
 end
