@@ -27,9 +27,11 @@ class InternmentsController < ApplicationController
   def generate_pdf    
     pdf = InternmentPdf::Generator.new(internment: @internment)
     pdf.generate
+
     send_data pdf.render, 
-    filename: "internment_data_#{@internment.created_at.strftime("%d-%m-%Y")}.pdf",
-    type: 'application/pdf', disposition: 'inline'
+              filename: "internacion-#{@internment.id}.pdf",
+              type: 'application/pdf',
+              disposition: :attachment
   end
 
   def update
