@@ -21,10 +21,6 @@ class Internment < ApplicationRecord
 
   validates :begin_date, :type, presence: true
 
-  validates :type, inclusion: { in: %w(judicial voluntario),
-      message: "%{value} no es un tipo de internación válida" },
-      if: Proc.new { |a| a.type.present? } 
-
   validate :internment_open, on: :create
   validate :beds_availability, on: :create
 
@@ -38,20 +34,20 @@ class Internment < ApplicationRecord
 
   def internment_open
     return true unless self.patient.internments.where(end_date: nil).any?
-
+    
     errors.add(:base, 'El paciente ya tiene una internación abierta')
   end
 
   def beds_availability
-    beds_available = self.patient.clinic.beds_judicial.to_i if type == "judicial"
-    beds_available = self.patient.clinic.beds_voluntary.to_i if type == "voluntario"
-    #beds_available = self.patient.clinic.total_beds(type)
-    if beds_available > 0
+    beds_available = self.patient.clinic.total_beds(type)
+    if not beds_available.nil?
       beds_used = self.patient.clinic.internments.open.where(type: type).count
       return true if beds_used < beds_available
 
-      errors.add(:base, "La Clínica no tiene camas disponibles para una internación de tipo #{type}")
     end
+    errors.add(:base, "La Clínica no tiene camas disponibles para una internación de tipo: #{type}")
   end
+
+
 
 end

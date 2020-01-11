@@ -30,9 +30,9 @@ class Clinic < ApplicationRecord
     self.id
   end
 
-  def total_beds
-    self.beds_voluntary.to_i if bed_type == 'judicial'
-    self.beds_judicial.to_i if bed_type == 'voluntario'
+  def total_beds(bed_type)
+    self.beds_judicial if bed_type == 'judicial'
+    self.beds_voluntary if bed_type == 'voluntario'
   end
 
   # RECORDATORIO: LA CLINICA NO DEBERIA PERMITIR MODIFICAR LA CANTIDAD DE CAMAS
