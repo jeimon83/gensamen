@@ -23,24 +23,46 @@ class Clinic < ApplicationRecord
   validates :name, :habilitation, :cuit, presence: true
 
   validate :ban_nil_beds, on: :update
+  validate :beds_qty, on: :update
 
-  scope :by_clinic, lambda { |clinic_id| 
+  scope :by_clinic, lambda { |clinic_id|
     where(id: clinic_id)
   }
 
   def clinic_id
-    self.id
+    id
   end
 
   def total_beds(bed_type)
-    self.beds_judicial if bed_type == 'judicial'
-    self.beds_voluntary if bed_type == 'voluntario'
+    beds_judicial if bed_type == 'judicial'
+    beds_voluntary if bed_type == 'voluntario'
   end
 
   def ban_nil_beds
     return true unless beds_judicial.nil? || beds_voluntary.nil?
 
-    errors.add(:base, 'Atención! No se pueden actualizar las camas')
+    errors.add(:base, 'No se pueden actualizar las camas a nil')
   end
-  # revisar update de camas si hay internaciones activas
+
+  def beds_qty
+    return true if voluntary && judicial
+
+    errors.add(:base, 'No puede haber menos camas que internaciones activas')
+  end
+
+  def voluntary
+    beds_voluntary >= active_voluntary_internments
+  end
+
+  def judicial
+    beds_judicial >= active_judicial_internments
+  end
+
+  def active_judicial_internments
+    internments.open.where(type: 'judicial').count
+  end
+
+  def active_voluntary_internments
+    internments.open.where(type: 'voluntario').count
+  end
 end
