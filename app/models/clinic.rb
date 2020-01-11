@@ -24,8 +24,8 @@ class Clinic < ApplicationRecord
 
   validate :ban_nil_beds, on: :update
 
-  scope :by_clinic, -> (clinic_id) {
-      where(id: clinic_id)
+  scope :by_clinic, lambda { |clinic_id| 
+    where(id: clinic_id)
   }
 
   def clinic_id
@@ -38,9 +38,9 @@ class Clinic < ApplicationRecord
   end
 
   def ban_nil_beds
-    return true if not beds_judicial.nil? || beds_voluntary.nil?
+    return true unless beds_judicial.nil? || beds_voluntary.nil?
 
-    errors.add(:base, 'Atención! No se pueden actualizar las camas de la Clínica')
+    errors.add(:base, 'Atención! No se pueden actualizar las camas')
   end
   # revisar update de camas si hay internaciones activas
 end
