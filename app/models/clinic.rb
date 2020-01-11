@@ -22,6 +22,8 @@ class Clinic < ApplicationRecord
 
   validates :name, :habilitation, :cuit, presence: true
 
+  validate :ban_nil_beds, on: :update
+
   scope :by_clinic, -> (clinic_id) {
       where(id: clinic_id)
   }
@@ -35,8 +37,10 @@ class Clinic < ApplicationRecord
     self.beds_voluntary if bed_type == 'voluntario'
   end
 
-  # RECORDATORIO: LA CLINICA NO DEBERIA PERMITIR MODIFICAR LA CANTIDAD DE CAMAS
-  # TANTO VOLUNTARIAS COMO JUDICIALES SI EXISTEN INTERNACIONES ACTIVAS
+  def ban_nil_beds
+    return true if not beds_judicial.nil? || beds_voluntary.nil?
 
-  #AGREGAR METODO QUE NO PERMITA ACTUALIZAR LAS CAMAS A NIL
+    errors.add(:base, 'Atención! No se pueden actualizar las camas de la Clínica')
+  end
+  # revisar update de camas si hay internaciones activas
 end
