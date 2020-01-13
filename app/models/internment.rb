@@ -21,14 +21,16 @@ class Internment < ApplicationRecord
 
   validates :begin_date, :type, presence: true
 
-  validate :internment_open, on: :create
+  validate :internment_open,   on: :create
   validate :beds_availability, on: :create
 
   scope :by_clinic, lambda { |clinic_id|
     joins(:patient).where(patients: { clinic_id: clinic_id })
   }
 
-  scope :open, -> { where(end_date: nil) }
+  scope :open,           -> { where(end_date: nil) }
+  scope :open_judicial,  -> { where(end_date: nil).where(type: 'judicial') }
+  scope :open_voluntary, -> { where(end_date: nil).where(type: 'voluntario') }
 
   delegate :clinic_id, to: :patient
 

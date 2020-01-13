@@ -59,10 +59,10 @@ class Clinic < ApplicationRecord
   end
 
   def active_judicial_internments
-    internments.open.where(type: 'judicial').count
+    internments.open_judicial.count
   end
 
   def active_voluntary_internments
-    internments.open.where(type: 'voluntario').count
+    internments.open_voluntary.count
   end
 end
